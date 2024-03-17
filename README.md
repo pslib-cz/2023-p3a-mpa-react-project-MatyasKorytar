@@ -17,9 +17,9 @@ Pokud je na kostkách stejný počet puntíků, řídíme se takto:
 3) 3 a 3 - Hráč odevzdává jednu slepici danému hráči.
 4) 4 a 4 - Přišla bída a na farmě se musely sníst všechna vejce - Odebrání všech vajec.
 5) 5 a 5 - Hráč hází kostkou podruhé, pokud hodí:
-           - 1 nebo 2 - Nehraje 1 nebo 2 kola.
-           - 3,4 nebo 5 - ztrácí všechna kuřata.
-           - 6 - ztrácí všechny slepice.
+- 1 nebo 2 - Nehraje 1 nebo 2 kola.
+- 3,4 nebo 5 - ztrácí všechna kuřata.
+- 6 - ztrácí všechny slepice.
 6) 6 a 6 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
 
 Hráč, který se vzdá hodu kostkami, může provést jednu výměnu pro slepici a až 2 pro kuřata.
