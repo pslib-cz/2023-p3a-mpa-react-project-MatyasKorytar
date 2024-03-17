@@ -6,21 +6,21 @@ Hra je pro 2-4 hráče
 
 Hra probíhá tak, že každý hráč vždy hází dvoumi kostkami (= 2x náhodné číslo). 
 Pokud je na kostkách rozdílný počet "puntíků", hráč dostane vejce, kuře nebo slepici podle následujícího schématu.
-Za každou kostku, na níž jsou: 
-1) 1,2 nebo 3 - hráč dostává vejce
-2) 4 nebo 5 - hráč dostává kuře
-3) 6 - hráč dostává slepici
+### Za každou kostku, na níž jsou: 
+#### 1) 1,2 nebo 3 - hráč dostává vejce
+#### 2) 4 nebo 5 - hráč dostává kuře
+#### 3) 6 - hráč dostává slepici
 
-Pokud je na kostkách stejný počet puntíků, řídíme se takto:
-1) 1 a 1 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
-2) 2 a 2 - Hráč odevzdává jedno kuře vybranému hráči.
-3) 3 a 3 - Hráč odevzdává jednu slepici danému hráči.
-4) 4 a 4 - Přišla bída a na farmě se musely sníst všechna vejce - Odebrání všech vajec.
-5) 5 a 5 - Hráč hází kostkou podruhé, pokud hodí:
+### Pokud je na kostkách stejný počet puntíků, řídíme se takto:
+#### 1) 1 a 1 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
+#### 2) 2 a 2 - Hráč odevzdává jedno kuře vybranému hráči.
+#### 3) 3 a 3 - Hráč odevzdává jednu slepici danému hráči.
+#### 4) 4 a 4 - Přišla bída a na farmě se musely sníst všechna vejce - Odebrání všech vajec.
+#### 5) 5 a 5 - Hráč hází kostkou podruhé, pokud hodí:
 - 1 nebo 2 - Nehraje 1 nebo 2 kola.
 - 3,4 nebo 5 - ztrácí všechna kuřata.
 - 6 - ztrácí všechny slepice.
-6) 6 a 6 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
+#### 6) 6 a 6 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
 
 Hráč, který se vzdá hodu kostkami, může provést jednu výměnu pro slepici a až 2 pro kuřata.
 Lze vyměnit:
