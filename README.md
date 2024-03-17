@@ -22,7 +22,7 @@ Pokud je na kostkách rozdílný počet "puntíků", hráč dostane vejce, kuře
 - 6 - ztrácí všechny slepice.
 #### 6) 6 a 6 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
 
-Hráč, který se vzdá hodu kostkami, může provést jednu výměnu pro slepici a až 2 pro kuřata.
+Hráč, který se vzdá hodu kostkami, může provést jednu výměnu pro slepici nebo 2 pro kuřata.
 Lze vyměnit:
 - 3 vejce za 1 kuře.
 - 3 kuřata za 1 slepici.
