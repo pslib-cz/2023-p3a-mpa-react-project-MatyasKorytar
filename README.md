@@ -16,10 +16,7 @@ Pokud je na kostkách rozdílný počet "puntíků", hráč dostane vejce, kuře
 #### 2) 2 a 2 - Hráč odevzdává jedno kuře vybranému hráči.
 #### 3) 3 a 3 - Hráč odevzdává jednu slepici danému hráči.
 #### 4) 4 a 4 - Přišla bída a na farmě se musely sníst všechna vejce - Odebrání všech vajec.
-#### 5) 5 a 5 - Hráč hází kostkou podruhé, pokud hodí:
-- 1 nebo 2 - Nehraje 1 nebo 2 kola.
-- 3,4 nebo 5 - ztrácí všechna kuřata.
-- 6 - ztrácí všechny slepice.
+#### 5) 5 a 5 - Hráč ztrácí všechny jeho slepice.
 #### 6) 6 a 6 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
 
 ### Hráč, který se vzdá hodu kostkami, může provést jednu výměnu pro slepici nebo 2 pro kuřata.
