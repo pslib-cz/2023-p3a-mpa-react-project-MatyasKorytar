@@ -1,7 +1,7 @@
 # Hra Kurník
 
 ## Téma
-Hra je pro 2-4 hráče
+Hráč hraje proti "Počítači"
 Účelem této hry je získat plný kurník - 9 slepic. 
 
 Hra probíhá tak, že každý hráč vždy hází dvoumi kostkami (= 2x náhodné číslo). 
@@ -13,8 +13,8 @@ Pokud je na kostkách rozdílný počet "puntíků", hráč dostane vejce, kuře
 
 ### Pokud je na kostkách stejný počet puntíků, řídíme se takto:
 #### 1) 1 a 1 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
-#### 2) 2 a 2 - Hráč odevzdává jedno kuře vybranému hráči.
-#### 3) 3 a 3 - Hráč odevzdává jednu slepici danému hráči.
+#### 2) 2 a 2 - Hráč odevzdává jedno kuře protihráči.
+#### 3) 3 a 3 - Hráč odevzdává jednu slepici protihráči.
 #### 4) 4 a 4 - Přišla bída a na farmě se musely sníst všechna vejce - Odebrání všech vajec.
 #### 5) 5 a 5 - Hráč ztrácí všechny jeho slepice.
 #### 6) 6 a 6 - Na farmu se vplížila liška, pokud hráč nemá kohouta, přijde o všechny slepice.
@@ -23,7 +23,7 @@ Pokud je na kostkách rozdílný počet "puntíků", hráč dostane vejce, kuře
 Lze vyměnit:
 - 3 vejce za 1 kuře.
 - 3 kuřata za 1 slepici.
-- 2 slepice za 1 kohouta - kohout varuje farmáře před liškou, a tak díky němu hřáč nepřijde o žádnou slepici.
+- 3 slepice za 1 kohouta - kohout varuje farmáře před liškou, a tak díky němu hřáč nepřijde o žádnou slepici.
 
       
 
