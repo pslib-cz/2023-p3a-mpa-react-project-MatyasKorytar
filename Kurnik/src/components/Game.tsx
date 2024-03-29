@@ -2,6 +2,8 @@ import React from "react";
 import InventoryDisplay from "./InventoryDisplay";
 import DiceRoller from "./DiceRoller";
 import TradeButtons from "./TradeButtons";
+import EnemyInventoryDisplay from "./EnemyInventoryDisplay";
+import EnemyDiceDisplay from "./EnemyDiceDisplay";
 
 const Game: React.FC = () => {
     return (
@@ -10,7 +12,8 @@ const Game: React.FC = () => {
         <InventoryDisplay />
         <DiceRoller />
         <TradeButtons />
-        {/* Zde můžete přidat další komponenty jako je zobrazení inventáře nepřítele atd. */}
+        <EnemyInventoryDisplay/>
+        <EnemyDiceDisplay/>
       </div>
     );
   };
