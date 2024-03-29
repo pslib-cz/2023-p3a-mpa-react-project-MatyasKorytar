@@ -1,4 +1,5 @@
 import React, { useState, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 type InventoryItems = {
     eggs: number;
@@ -9,12 +10,16 @@ type InventoryItems = {
 
 type GameContextType = {
     playerInventory: InventoryItems;
+    lastTrade: string | null;
+    setLastTrade: React.Dispatch<React.SetStateAction<string | null>>;
     enemyInventory: InventoryItems;
     setPlayerInventory:  React.Dispatch<React.SetStateAction<InventoryItems>>;
     setEnemyInventory: React.Dispatch<React.SetStateAction<InventoryItems>>;
     handleTrade: (tradeType: string) => void;
     handleRoll: (diceValues: [number, number]) => void;
     handleEnemyMove: () => void;
+    playerDiceValues: [number, number];
+    setPlayerDiceValues: React.Dispatch<React.SetStateAction<[number, number]>>;
     enemyDiceValues: [number, number]; // Přidání nové vlastnosti
     setEnemyDiceValues: React.Dispatch<React.SetStateAction<[number, number]>>; // Přidání setteru pro novou vlastnost
 }
@@ -22,10 +27,19 @@ type GameContextType = {
 const GameContext = createContext<GameContextType>({} as GameContextType);
 
 export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const[playerInventory, setPlayerInventory] = useState<InventoryItems>({eggs: 0, chickens: 0, hens: 0, rooster: false});
-    const[enemyInventory, setEnemyInventory] = useState<InventoryItems>({eggs: 0, chickens: 0, hens: 0, rooster: false});
+    const [playerInventory, setPlayerInventory] = useState<InventoryItems>({ eggs: 0, chickens: 0, hens: 0, rooster: false });
+    const [enemyInventory, setEnemyInventory] = useState<InventoryItems>({ eggs: 0, chickens: 0, hens: 0, rooster: false });
+    // Inicializace stavů pro hodnoty kostek
+    const [playerDiceValues, setPlayerDiceValues] = useState<[number, number]>([1, 1]);
+    const [enemyDiceValues, setEnemyDiceValues] = useState<[number, number]>([1, 1]);
+    const navigate = useNavigate();
+    const [lastTrade, setLastTrade] = useState<string | null>(null);
+
+
+
     
     const handleTrade = (tradeType: string) => {
+        let tradeDescription = '';
         setPlayerInventory(prevInventory => {
             let newInventory = { ...prevInventory };
             switch (tradeType) {
@@ -33,24 +47,29 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     if (prevInventory.eggs >= 3) {
                         newInventory.eggs -= 3;
                         newInventory.chickens += 1;
+                        tradeDescription = '3 vejce za kuře';
                     }
                     break;
                 case 'chicksToHen':
                     if (prevInventory.chickens >= 3) {
                         newInventory.chickens -= 3;
                         newInventory.hens += 1;
+                        tradeDescription = '3 kuřata za slepici';
                     }
                     break;
                 case 'hensToRooster':
                     if (prevInventory.hens >= 3) {
                         newInventory.hens -= 3;
                         newInventory.rooster = true;
+                        tradeDescription = '3 slepice za kohouta';
                     }
                     break;
                 default:
                     // Neplatný typ obchodu
                     break;
             }
+            setLastTrade(tradeDescription);
+            navigate("/player-traderesult");
             return newInventory;
         });
     };
@@ -59,6 +78,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setPlayerInventory(prevInventory => {
             const [dice1, dice2] = diceValues;
             let newInventory = { ...prevInventory };
+            setPlayerDiceValues(diceValues);
     
             // Kontrola, zda hodnoty na kostkách nejsou stejné
             if (dice1 === dice2) {
@@ -115,7 +135,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     return newInventory;
                     });
                     };
-        const [enemyDiceValues, setEnemyDiceValues] = useState<[number, number]>([1, 1]);
 
 
     const handleEnemyMove = () => {
@@ -153,6 +172,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           playerInventory,
           enemyInventory,
           enemyDiceValues,
+          lastTrade,
+          setLastTrade,
+          playerDiceValues,
+          setPlayerDiceValues,
           setEnemyDiceValues,
           setPlayerInventory,
           setEnemyInventory,

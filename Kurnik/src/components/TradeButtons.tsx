@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import GameContext from '../providers/GameContext';
+import { useNavigate } from 'react-router-dom';
 
 const TradeButtons: React.FC = () => {
   const { handleTrade } = useContext(GameContext);
+  const navigate = useNavigate();
 
   return (
     <div>
