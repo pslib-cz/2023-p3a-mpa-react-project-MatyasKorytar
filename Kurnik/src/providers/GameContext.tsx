@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useReducer, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 type InventoryItems = {
@@ -8,184 +8,275 @@ type InventoryItems = {
     rooster: boolean;
 }
 
-type GameContextType = {
+interface GameState {
+    playerInventory: InventoryItems;
+    enemyInventory: InventoryItems;
+    playerDiceValues: [number, number];
+    enemyDiceValues: [number, number];
+    lastTrade: string | null;
+  }
+
+  type ActionType =
+  | { type: 'SET_LAST_TRADE'; payload: string | null }
+  | { type: 'HANDLE_TRADE'; payload: { tradeType: string } }
+  | { type: 'HANDLE_ROLL'; payload: [number, number] }
+  | { type: 'HANDLE_ENEMY_MOVE' }
+  | { type: 'SET_PLAYER_INVENTORY'; payload: InventoryItems }
+  | { type: 'SET_ENEMY_INVENTORY'; payload: InventoryItems }
+  | { type: 'SET_PLAYER_DICE_VALUES'; payload: [number, number] }
+  | { type: 'SET_ENEMY_DICE_VALUES'; payload: [number, number] };
+
+
+  type GameContextType = {
     playerInventory: InventoryItems;
     lastTrade: string | null;
-    setLastTrade: React.Dispatch<React.SetStateAction<string | null>>;
     enemyInventory: InventoryItems;
-    setPlayerInventory:  React.Dispatch<React.SetStateAction<InventoryItems>>;
-    setEnemyInventory: React.Dispatch<React.SetStateAction<InventoryItems>>;
+    playerDiceValues: [number, number];
+    enemyDiceValues: [number, number];
     handleTrade: (tradeType: string) => void;
     handleRoll: (diceValues: [number, number]) => void;
     handleEnemyMove: () => void;
-    playerDiceValues: [number, number];
-    setPlayerDiceValues: React.Dispatch<React.SetStateAction<[number, number]>>;
-    enemyDiceValues: [number, number]; // Přidání nové vlastnosti
-    setEnemyDiceValues: React.Dispatch<React.SetStateAction<[number, number]>>; // Přidání setteru pro novou vlastnost
-}
+    // Funkce pro aktualizaci kontextu, nyní očekávají přímé hodnoty místo setState akcí
+    setLastTrade: (lastTrade: string | null) => void;
+    // Další funkce pro manipulaci se stavem přímo přes dispatch akce
+    // ...
+};
 
-const GameContext = createContext<GameContextType>({} as GameContextType);
+export const GameContext = createContext<GameContextType>({} as GameContextType);
 
-export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [playerInventory, setPlayerInventory] = useState<InventoryItems>({ eggs: 0, chickens: 0, hens: 0, rooster: false });
-    const [enemyInventory, setEnemyInventory] = useState<InventoryItems>({ eggs: 0, chickens: 0, hens: 0, rooster: false });
-    // Inicializace stavů pro hodnoty kostek
-    const [playerDiceValues, setPlayerDiceValues] = useState<[number, number]>([1, 1]);
-    const [enemyDiceValues, setEnemyDiceValues] = useState<[number, number]>([1, 1]);
-    const navigate = useNavigate();
-    const [lastTrade, setLastTrade] = useState<string | null>(null);
-
+const initialState: GameState = {
+    playerInventory: { eggs: 0, chickens: 0, hens: 0, rooster: false },
+    enemyInventory: { eggs: 0, chickens: 0, hens: 0, rooster: false },
+    playerDiceValues: [1, 1],
+    enemyDiceValues: [1, 1],
+    lastTrade: null,
+  };
 
 
-    
-    const handleTrade = (tradeType: string) => {
-        let tradeDescription = '';
-        setPlayerInventory(prevInventory => {
-            let newInventory = { ...prevInventory };
-            switch (tradeType) {
+  
+function gameReducer(state: GameState, action: ActionType): GameState {
+    switch (action.type) {
+        case 'SET_LAST_TRADE':
+            return { ...state, lastTrade: action.payload };
+
+        case 'HANDLE_TRADE':
+            let tradeDescription = '';
+            let newPlayerInventory = { ...state.playerInventory };
+            switch (action.payload.tradeType) {
                 case 'eggsToChick':
-                    if (prevInventory.eggs >= 3) {
-                        newInventory.eggs -= 3;
-                        newInventory.chickens += 1;
+                    if (newPlayerInventory.eggs >= 3) {
+                        newPlayerInventory.eggs -= 3;
+                        newPlayerInventory.chickens += 1;
                         tradeDescription = '3 vejce za kuře';
                     }
                     break;
                 case 'chicksToHen':
-                    if (prevInventory.chickens >= 3) {
-                        newInventory.chickens -= 3;
-                        newInventory.hens += 1;
+                    if (newPlayerInventory.chickens >= 3) {
+                        newPlayerInventory.chickens -= 3;
+                        newPlayerInventory.hens += 1;
                         tradeDescription = '3 kuřata za slepici';
                     }
                     break;
                 case 'hensToRooster':
-                    if (prevInventory.hens >= 3) {
-                        newInventory.hens -= 3;
-                        newInventory.rooster = true;
+                    if (newPlayerInventory.hens >= 3) {
+                        newPlayerInventory.hens -= 3;
+                        newPlayerInventory.rooster = true;
                         tradeDescription = '3 slepice za kohouta';
                     }
                     break;
                 default:
-                    // Neplatný typ obchodu
+                    tradeDescription = 'Neplatný typ obchodu';
                     break;
             }
-            setLastTrade(tradeDescription);
-            navigate("/player-traderesult");
-            return newInventory;
-        });
-    };
-    
-    const handleRoll = (diceValues: [number, number]) => {
-        setPlayerInventory(prevInventory => {
-            const [dice1, dice2] = diceValues;
-            let newInventory = { ...prevInventory };
-            setPlayerDiceValues(diceValues);
-    
-            // Kontrola, zda hodnoty na kostkách nejsou stejné
-            if (dice1 === dice2) {
-                // Speciální pravidla pro dvojice
-                switch (dice1) {
-                    case 1:
-                        // Liška pokud není kohout
-                        if (!newInventory.rooster) {
-                            newInventory.hens = 0;
-                        }
-                        break;
-                    case 2:
-                        // Odevzdat kuře, pokud je dostupné
-                        if (newInventory.chickens > 0) {
-                            newInventory.chickens -= 1;
-                            setEnemyInventory(enemy => ({ ...enemy, chickens: enemy.chickens + 1 }));
-                        }
-                        break;
-                    case 3:
-                        // Odevzdat slepici, pokud je dostupná
-                        if (newInventory.hens > 0) {
-                            newInventory.hens -= 1;
-                            setEnemyInventory(enemy => ({ ...enemy, hens: enemy.hens + 1 }));
-                        }
-                        break;
-                    case 4:
-                        // Sníst všechna vejce
-                        newInventory.eggs = 0;
-                        break;
-                    case 5:
-                        // Ztrácí všechny slepice
-                        newInventory.hens = 0;
-                        break;
-                    case 6:
-                        // Liška pokud není kohout
-                        if (!newInventory.rooster) {
-                            newInventory.hens = 0;
-                        }
-                        break;
+            return { ...state, playerInventory: newPlayerInventory, lastTrade: tradeDescription };
+
+            case 'HANDLE_ROLL':
+                const [dice1, dice2] = action.payload;
+                let updatedPlayerInventory = { ...state.playerInventory };
+                let updatedEnemyInventory = { ...state.enemyInventory };
+            
+                if (dice1 === dice2) {
+                    switch (dice1) {
+                        case 1:
+                            // Liška: pokud není kohout, ztratí všechny slepice
+                            if (!updatedPlayerInventory.rooster) {
+                                updatedPlayerInventory.hens = 0;
+                            }
+                            break;
+                        case 2:
+                            // Odevzdat kuře, pokud je dostupné
+                            if (updatedPlayerInventory.chickens > 0) {
+                                updatedPlayerInventory.chickens -= 1;
+                                updatedEnemyInventory.chickens += 1;
+                            }
+                            break;
+                        case 3:
+                            // Odevzdat slepici, pokud je dostupná
+                            if (updatedPlayerInventory.hens > 0) {
+                                updatedPlayerInventory.hens -= 1;
+                                updatedEnemyInventory.hens += 1;
+                            }
+                            break;
+                        case 4:
+                            // Sníst všechna vejce
+                            updatedPlayerInventory.eggs = 0;
+                            break;
+                        case 5:
+                            // Ztrácí všechny slepice
+                            updatedPlayerInventory.hens = 0;
+                            break;
+                        case 6:
+                            // Liška: pokud není kohout, ztratí všechny slepice
+                            if (!updatedPlayerInventory.rooster) {
+                                updatedPlayerInventory.hens = 0;
+                            }
+                            break;
+                    }
+                } else {
+                    updatedPlayerInventory.eggs += dice1 <= 3 ? 1 : 0;
+                    updatedPlayerInventory.chickens += dice1 >= 4 && dice1 <= 5 ? 1 : 0;
+                    updatedPlayerInventory.hens += dice1 === 6 ? 1 : 0;
+            
+                    updatedPlayerInventory.eggs += dice2 <= 3 ? 1 : 0;
+                    updatedPlayerInventory.chickens += dice2 >= 4 && dice2 <= 5 ? 1 : 0;
+                    updatedPlayerInventory.hens += dice2 === 6 ? 1 : 0;
                 }
-                    } else {
-                // Rozdělení odměn podle hodnoty na kostkách
-                [dice1, dice2].forEach(dice => {
-                    if (dice >= 1 && dice <= 3) {
-                        newInventory.eggs += 1;
-                    } else if (dice >=
-                    4 && dice <= 5) {
-                    newInventory.chickens += 1;
-                    } else if (dice === 6) {
-                    newInventory.hens += 1;
+            
+                return {
+                    ...state,
+                    playerInventory: updatedPlayerInventory,
+                    enemyInventory: updatedEnemyInventory,
+                    playerDiceValues: action.payload
+                };
+            
+            case 'HANDLE_ENEMY_MOVE':
+                const enemyDice1 = Math.floor(Math.random() * 6) + 1;
+                const enemyDice2 = Math.floor(Math.random() * 6) + 1;
+                let updateEnemyInventory = { ...state.enemyInventory };
+            
+                if (enemyDice1 === enemyDice2) {
+                    switch (enemyDice1) {
+                        case 1:
+                            // Liška: pokud není kohout, ztratí všechny slepice
+                            if (!updateEnemyInventory.rooster) {
+                                updateEnemyInventory.hens = 0;
+                            }
+                            break;
+                        case 2:
+                            // Odevzdat kuře, pokud je dostupné
+                            if (updateEnemyInventory.chickens > 0) {
+                                updateEnemyInventory.chickens -= 1;
+                                // Předpokládá se aktualizace inventáře hráče nebo systému, ale to by mělo být řešeno mimo tento případ
+                            }
+                            break;
+                        case 3:
+                            // Odevzdat slepici, pokud je dostupná
+                            if (updateEnemyInventory.hens > 0) {
+                                updateEnemyInventory.hens -= 1;
+                                // Podobně, aktualizace inventáře mimo tento blok
+                            }
+                            break;
+                        case 4:
+                            // Sníst všechna vejce
+                            updateEnemyInventory.eggs = 0;
+                            break;
+                        case 5:
+                            // Ztrácí všechny slepice
+                            updateEnemyInventory.hens = 0;
+                            break;
+                        case 6:
+                            // Liška: pokud není kohout, ztratí všechny slepice
+                            if (!updateEnemyInventory.rooster) {
+                                updateEnemyInventory.hens = 0;
+                            }
+                            break;
                     }
-                    });
-                    }
-                    return newInventory;
-                    });
+                } else {
+                    // Aktualizace inventáře na základě hodnot kostek
+                    updateEnemyInventory.eggs += enemyDice1 <= 3 ? 1 : 0;
+                    updateEnemyInventory.chickens += enemyDice1 >= 4 && enemyDice1 <= 5 ? 1 : 0;
+                    updateEnemyInventory.hens += enemyDice1 === 6 ? 1 : 0;
+            
+                    updateEnemyInventory.eggs += enemyDice2 <= 3 ? 1 : 0;
+                    updateEnemyInventory.chickens += enemyDice2 >= 4 && enemyDice2 <= 5 ? 1 : 0;
+                    updateEnemyInventory.hens += enemyDice2 === 6 ? 1 : 0;
+                }
+            
+                return {
+                    ...state,
+                    enemyInventory: updateEnemyInventory,
+                    enemyDiceValues: [enemyDice1, enemyDice2]
+                };
+
+                case 'SET_PLAYER_INVENTORY':
+                    return {
+                        ...state,
+                        playerInventory: action.payload
                     };
+        
+                case 'SET_ENEMY_INVENTORY':
+                    return {
+                        ...state,
+                        enemyInventory: action.payload
+                    };
+        
+                case 'SET_PLAYER_DICE_VALUES':
+                    return {
+                        ...state,
+                        playerDiceValues: action.payload
+                    };
+        
+                case 'SET_ENEMY_DICE_VALUES':
+                    return {
+                        ...state,
+                        enemyDiceValues: action.payload
+                    };
+        
 
-
-    const handleEnemyMove = () => {
-        // Simulace hodu kostkou pro nepřítele
-        const dice1 = Math.floor(Math.random() * 6) + 1;
-        const dice2 = Math.floor(Math.random() * 6) + 1;
-        setEnemyDiceValues([dice1, dice2]);
-    
-        // Zde můžete použít logiku podobnou `handleRoll`, ale pro nepřítele (enemyInventory)
-        // Například:
-        if (dice1 === dice2) {
-            // Implementujte speciální pravidla pro dvojice pro nepřítele
-            // Podobně, jak je to implementováno pro hráče
-        } else {
-            // Rozdělení odměn podle hodnoty na kostkách pro nepřítele
-            [dice1, dice2].forEach(dice => {
-                if (dice >= 1 && dice <= 3) {
-                    setEnemyInventory(prev => ({ ...prev, eggs: prev.eggs + 1 }));
-                } else if (dice >= 4 && dice <= 5) {
-                    setEnemyInventory(prev => ({ ...prev, chickens: prev.chickens + 1 }));
-                } else if (dice === 6) {
-                    setEnemyInventory(prev => ({ ...prev, hens: prev.hens + 1 }));
-                }
-            });
+        default:
+            throw new Error('Neznámý typ akce');
         }
-    
-        // Přidání logiky pro náhodné obchody může být také zajímavé
-        // Můžete vytvořit náhodnou šanci, že nepřítel provede obchod
-    };
-                    
+    }
 
-
-    return (
-        <GameContext.Provider value={{
-          playerInventory,
-          enemyInventory,
-          enemyDiceValues,
-          lastTrade,
-          setLastTrade,
-          playerDiceValues,
-          setPlayerDiceValues,
-          setEnemyDiceValues,
-          setPlayerInventory,
-          setEnemyInventory,
-          handleTrade,
-          handleRoll,
-          handleEnemyMove,
-        }}>
-          {children}
-        </GameContext.Provider>
-      );
-    };
+    export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+        const [state, dispatch] = useReducer(gameReducer, initialState);
+        const navigate = useNavigate();
     
+        // Přetvoření handleTrade na použití dispatch
+        const handleTrade = (tradeType: string) => {
+            dispatch({ type: 'HANDLE_TRADE', payload: { tradeType } });
+            // Navigace po provedení obchodu
+            navigate("/player-traderesult");
+        };
+    
+        // Přetvoření handleRoll na použití dispatch
+        const handleRoll = (diceValues: [number, number]) => {
+            dispatch({ type: 'HANDLE_ROLL', payload: diceValues });
+        };
+    
+        // Přetvoření handleEnemyMove na použití dispatch
+        const handleEnemyMove = () => {
+            dispatch({ type: 'HANDLE_ENEMY_MOVE' });
+        };
+    
+        // Hodnoty poskytnuté kontextem
+        const contextValue = {
+            ...state, // Rozbalení celého stavu do kontextu
+            handleTrade,
+            handleRoll,
+            handleEnemyMove,
+            setLastTrade: (lastTrade: string | null) => dispatch({ type: 'SET_LAST_TRADE', payload: lastTrade }),
+            setPlayerInventory: (inventory: InventoryItems) => dispatch({ type: 'SET_PLAYER_INVENTORY', payload: inventory }),
+            setEnemyInventory: (inventory: InventoryItems) => dispatch({ type: 'SET_ENEMY_INVENTORY', payload: inventory }),
+            setPlayerDiceValues: (diceValues: [number, number]) => dispatch({ type: 'SET_PLAYER_DICE_VALUES', payload: diceValues }),
+            setEnemyDiceValues: (diceValues: [number, number]) => dispatch({ type: 'SET_ENEMY_DICE_VALUES', payload: diceValues })
+        };
+    
+        return (
+            <GameContext.Provider value={contextValue}>
+                {children}
+            </GameContext.Provider>
+        );
+    };
+        
     export default GameContext;
