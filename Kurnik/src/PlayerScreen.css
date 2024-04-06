@@ -1,0 +1,30 @@
+body {
+    background-image: url(/bg/Bg-Mobile.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.Dices__div {
+    display: Flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.Dices {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid white;
+    width: 256px;
+}
+
+.DicePicture {
+    width: 63px;
+}
+
+.PlayerScreen__HenHouse {
+    width: 256px;
+}
+
+.PlayerScreen__Rooster {
+    width: 83px;
+}

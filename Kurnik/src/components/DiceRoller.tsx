@@ -16,11 +16,12 @@ const DiceRoller: React.FC = () => {
 
     return (
         <>
-            <button onClick={roll}>Hodit kostkami</button>
-            <div>
-                <Dice value={playerDiceValues[0]} />
-                <Dice value={playerDiceValues[1]} />
-            </div>
+            <button className='Dices' onClick={roll}>
+                <div className='Dices__div'>
+                    <Dice value={playerDiceValues[0]} />
+                    <Dice value={playerDiceValues[1]} />
+                </div>
+            </button>
         </>
     );
 };
