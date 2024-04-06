@@ -15,7 +15,7 @@ const InventoryDisplay: React.FC = () => {
                 <div className="Inventory__Item">
                     <p>{playerInventory.chickens}x</p>
                     <img src="/others/Chicken.png"/>
-                </div>
+            </div>
             </div>
             <div className="Block__Trading">
                 <TradeButtons/>

@@ -13,7 +13,6 @@ const PlayerScreen: React.FC = () =>{
 
     return (
         <div className="PlayerScreen">
-            <h2>Player</h2>
             <RoosterImage isOwned={playerInventory.rooster} />
             <img className="PlayerScreen__HenHouse" src={getHenImage(playerInventory.hens)} alt={`Hen Count: ${playerInventory.hens}`} />
             <DiceRoller/>

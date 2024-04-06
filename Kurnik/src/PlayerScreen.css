@@ -1,11 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 
+#root {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-image: url(/bg/Bg-Mobile.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     font-family: "Itim", cursive;
+    justify-content: center;
+    color: white;
 }
 
 .Dices__div {
@@ -24,6 +31,17 @@ body {
     width: 63px;
 }
 
+.PlayerScreen {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
 .PlayerScreen__HenHouse {
     width: 256px;
 }
@@ -35,12 +53,20 @@ body {
 
 .Trade_Item {
     width: 55px;
+    height: 45px;
 }
 
 .TradeButton {
     border: 3px solid white;
-
+    padding: 0px 10px;
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+.Trade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 
@@ -55,7 +81,26 @@ body {
 }
 
 .Block {
+    height: 215px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url(/bg/ItemsBG.jpg);
+    position: absolute;
+    bottom: 0px;
+    gap: 10px;
 }
+
+.Block__Inventory {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.TradeFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
