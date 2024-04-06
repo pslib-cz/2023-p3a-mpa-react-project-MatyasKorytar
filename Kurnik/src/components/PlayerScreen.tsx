@@ -18,7 +18,6 @@ const PlayerScreen: React.FC = () =>{
             <img className="PlayerScreen__HenHouse" src={getHenImage(playerInventory.hens)} alt={`Hen Count: ${playerInventory.hens}`} />
             <DiceRoller/>
             <InventoryDisplay/>
-            <TradeButtons/>
         </div>
     )
 };

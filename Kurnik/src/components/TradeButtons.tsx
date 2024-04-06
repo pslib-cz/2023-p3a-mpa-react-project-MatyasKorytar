@@ -7,10 +7,28 @@ const TradeButtons: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <button onClick={() => handleTrade('eggsToChick')}>Vyměnit 3 vejce za kuře</button>
-      <button onClick={() => handleTrade('chicksToHen')}>Vyměnit 3 kuřata za slepici</button>
-      <button onClick={() => handleTrade('hensToRooster')}>Vyměnit 3 slepice za kohouta</button>
+    <div className='TradeFlex'>
+      <button className='TradeButton' onClick={() => handleTrade('eggsToChick')}>
+        <div className='Trade'>
+          <img className='Trade_Item' src='/others/Triple_Eggs.png'/>
+          <img className='Trade_Arrow' src='/others/arrow.png'/>
+          <img className='Trade_Item' src='/others/Chicken_Transparent.png'/>  
+        </div>
+      </button>
+      <button className='TradeButton' onClick={() => handleTrade('chicksToHen')}>
+        <div className='Trade'>
+          <img className='Trade_Item' src='/others/Triple_Chickens.png'/>
+          <img className='Trade_Arrow' src='/others/arrow.png'/>
+          <img className='Trade_Item' src='/others/Hen_Transparent.png'/>
+        </div>
+      </button>
+      <button className='TradeButton' onClick={() => handleTrade('hensToRooster')}>
+        <div className='Trade'>
+          <img className='Trade_Item' src='/others/Triple_Hen.png'/>
+          <img className='Trade_Arrow' src='/others/arrow.png'/>
+          <img className='Trade_Item' src='/others/Rooster_Transparent.png'/>
+        </div>
+      </button>
     </div>
   );
 };

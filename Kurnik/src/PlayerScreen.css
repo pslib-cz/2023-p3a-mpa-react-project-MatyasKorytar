@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
 body {
     background-image: url(/bg/Bg-Mobile.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: "Itim", cursive;
 }
 
 .Dices__div {
@@ -27,4 +30,32 @@ body {
 
 .PlayerScreen__Rooster {
     width: 83px;
+}
+
+
+.Trade_Item {
+    width: 55px;
+}
+
+.TradeButton {
+    border: 3px solid white;
+
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+.Trade_Arrow {
+    width: 36px;
+    height: 36px;
+}
+
+.Inventory__Item {
+    display: flex;
+    gap: 5px;
+}
+
+.Block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
