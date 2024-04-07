@@ -14,6 +14,7 @@ interface GameState {
     playerDiceValues: [number, number];
     enemyDiceValues: [number, number];
     lastTrade: string | null;
+    lastEarnings: { type: string; quantity: number }[]; 
   }
 
   type ActionType =
@@ -36,10 +37,8 @@ interface GameState {
     handleTrade: (tradeType: string) => void;
     handleRoll: (diceValues: [number, number]) => void;
     handleEnemyMove: () => void;
-    // Funkce pro aktualizaci kontextu, nyní očekávají přímé hodnoty místo setState akcí
     setLastTrade: (lastTrade: string | null) => void;
-    // Další funkce pro manipulaci se stavem přímo přes dispatch akce
-    // ...
+    lastEarnings: { type: string; quantity: number }[]; 
 };
 
 export const GameContext = createContext<GameContextType>({} as GameContextType);
@@ -50,6 +49,7 @@ const initialState: GameState = {
     playerDiceValues: [1, 1],
     enemyDiceValues: [1, 1],
     lastTrade: null,
+    lastEarnings: [], 
   };
 
 
@@ -67,25 +67,25 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                     if (newPlayerInventory.eggs >= 3) {
                         newPlayerInventory.eggs -= 3;
                         newPlayerInventory.chickens += 1;
-                        tradeDescription = '3 vejce za kuře';
+                        tradeDescription = 'Eggs';
                     }
                     break;
                 case 'chicksToHen':
                     if (newPlayerInventory.chickens >= 3) {
                         newPlayerInventory.chickens -= 3;
                         newPlayerInventory.hens += 1;
-                        tradeDescription = '3 kuřata za slepici';
+                        tradeDescription = 'Chickens';
                     }
                     break;
                 case 'hensToRooster':
                     if (newPlayerInventory.hens >= 3) {
                         newPlayerInventory.hens -= 3;
                         newPlayerInventory.rooster = true;
-                        tradeDescription = '3 slepice za kohouta';
+                        tradeDescription = 'Hens';
                     }
                     break;
                 default:
-                    tradeDescription = 'Neplatný typ obchodu';
+                    tradeDescription = 'X';
                     break;
             }
             return { ...state, playerInventory: newPlayerInventory, lastTrade: tradeDescription };
@@ -94,7 +94,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                 const [dice1, dice2] = action.payload;
                 let updatedPlayerInventory = { ...state.playerInventory };
                 let updatedEnemyInventory = { ...state.enemyInventory };
-            
+                let lastEarnings = []; // Resetování získaných položek
                 if (dice1 === dice2) {
                     switch (dice1) {
                         case 1:
@@ -141,10 +141,29 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                     updatedPlayerInventory.chickens += dice2 >= 4 && dice2 <= 5 ? 1 : 0;
                     updatedPlayerInventory.hens += dice2 === 6 ? 1 : 0;
                 }
+
+                if (dice1 <= 3) {
+                    lastEarnings.push({ type: 'egg', quantity: 1 });
+                  }
+                  if (dice1 >= 4 && dice1 <= 5) {
+                    lastEarnings.push({ type: 'chicken', quantity: 1 });
+                  }
+                  if (dice1 === 6) {
+                    lastEarnings.push({ type: 'hen', quantity: 1 });
+                  }
+                  if (dice2 <= 3) {
+                    lastEarnings.push({ type: 'egg', quantity: 1 });
+                  }
+                  if (dice2 >= 4 && dice2 <= 5) {
+                    lastEarnings.push({ type: 'chicken', quantity: 1 });
+                  }
+                  if (dice2 === 6) {
+                    lastEarnings.push({ type: 'hen', quantity: 1 });
+                  }
             
                 return {
                     ...state,
-                    playerInventory: updatedPlayerInventory,
+                    playerInventory: updatedPlayerInventory, lastEarnings,
                     enemyInventory: updatedEnemyInventory,
                     playerDiceValues: action.payload
                 };
