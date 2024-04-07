@@ -95,6 +95,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-right: 60px;
 }
 
 .TradeFlex {
@@ -153,10 +154,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-right: 64px;
 }
 
 .Block--Result {
-    gap: 40px;
+    gap: 30px;
 }
 
 .ResultScreen__Dices {

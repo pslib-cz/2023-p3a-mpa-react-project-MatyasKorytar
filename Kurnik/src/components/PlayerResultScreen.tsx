@@ -23,11 +23,6 @@ const PlayerResultScreen: React.FC = () => {
           <Dice value={playerDiceValues[1]} />
         </div>
         <div className="Block Block--Result">
-                {/* Zobrazit EarningsDisplay, pokud hráč odehrál kostkou a lastEarnings má položky */}
-            {lastEarnings.length > 0 && <EarningsDisplay lastEarnings={lastEarnings}/>}
-
-{/* Zobrazit TradeResultDisplay, pokud hráč provedl trade a lastTrade není null */}
-{lastTrade && <TradeResultDisplay/>}
 
 
             <div className="Block__Inventory">
@@ -39,7 +34,11 @@ const PlayerResultScreen: React.FC = () => {
                     <p>{playerInventory.chickens}x</p>
                     <img src="/others/Chicken.png"/>
                 </div>
-             </div>     
+             </div>   
+
+             {lastEarnings.length > 0 && <EarningsDisplay lastEarnings={lastEarnings}/>}
+
+             {lastTrade && <TradeResultDisplay/>}  
           
             <button className="NextButt" onClick={handleNext}>
                     <img src="/others/arrow2.png"/>

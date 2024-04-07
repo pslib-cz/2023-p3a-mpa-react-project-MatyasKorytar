@@ -10,7 +10,7 @@ const DiceRoller: React.FC = () => {
     const roll = () => {
         const dice1 = Math.floor(Math.random() * 6) + 1;
         const dice2 = Math.floor(Math.random() * 6) + 1;
-        handleRoll([dice1, dice2]); // Aktualizace stavu pomocí reduceru
+        handleRoll([dice1, dice2]); 
         navigate("/player-result");
     };
 

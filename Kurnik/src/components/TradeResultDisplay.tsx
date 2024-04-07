@@ -41,7 +41,7 @@ const TradeResultDisplay = () => {
     const details = tradeDetails[lastTrade as TradeType];
 
     return (
-      <div>
+      <div className="Block__Earnings">
         <div className="Earnings__Item">
           <span>{details.lost.quantity}x</span>
           <img className="Item__Picture" src={details.lost.image} alt="Lost" />
