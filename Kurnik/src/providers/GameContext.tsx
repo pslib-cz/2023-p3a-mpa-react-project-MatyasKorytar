@@ -25,7 +25,9 @@ interface GameState {
   | { type: 'SET_PLAYER_INVENTORY'; payload: InventoryItems }
   | { type: 'SET_ENEMY_INVENTORY'; payload: InventoryItems }
   | { type: 'SET_PLAYER_DICE_VALUES'; payload: [number, number] }
-  | { type: 'SET_ENEMY_DICE_VALUES'; payload: [number, number] };
+  | { type: 'SET_ENEMY_DICE_VALUES'; payload: [number, number] }
+  | { type: 'RESET_LAST_EARNINGS' }
+  | { type: 'RESET_LAST_TRADE' };
 
 
   type GameContextType = {
@@ -37,6 +39,7 @@ interface GameState {
     handleTrade: (tradeType: string) => void;
     handleRoll: (diceValues: [number, number]) => void;
     handleEnemyMove: () => void;
+    handleNext: () => void;
     setLastTrade: (lastTrade: string | null) => void;
     lastEarnings: { type: string; quantity: number }[]; 
 };
@@ -56,6 +59,10 @@ const initialState: GameState = {
   
 function gameReducer(state: GameState, action: ActionType): GameState {
     switch (action.type) {
+        case 'RESET_LAST_EARNINGS':
+            return { ...state, lastEarnings: [] };
+        case 'RESET_LAST_TRADE':
+            return { ...state, lastTrade: null };
         case 'SET_LAST_TRADE':
             return { ...state, lastTrade: action.payload };
 
@@ -260,12 +267,21 @@ function gameReducer(state: GameState, action: ActionType): GameState {
     export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         const [state, dispatch] = useReducer(gameReducer, initialState);
         const navigate = useNavigate();
+        const resetLastEarnings = () => dispatch({ type: 'RESET_LAST_EARNINGS' });
+        const resetLastTrade = () => dispatch({ type: 'RESET_LAST_TRADE' });
+        
+        
+        const handleNext = () => {
+            resetLastEarnings();
+            resetLastTrade();
+            navigate("/enemy-turn");
+        };
     
         // Přetvoření handleTrade na použití dispatch
         const handleTrade = (tradeType: string) => {
             dispatch({ type: 'HANDLE_TRADE', payload: { tradeType } });
             // Navigace po provedení obchodu
-            navigate("/player-traderesult");
+            navigate("/player-result");
         };
     
         // Přetvoření handleRoll na použití dispatch
@@ -280,15 +296,18 @@ function gameReducer(state: GameState, action: ActionType): GameState {
     
         // Hodnoty poskytnuté kontextem
         const contextValue = {
-            ...state, // Rozbalení celého stavu do kontextu
+            ...state,
             handleTrade,
             handleRoll,
             handleEnemyMove,
+            resetLastEarnings,
+            resetLastTrade,    
             setLastTrade: (lastTrade: string | null) => dispatch({ type: 'SET_LAST_TRADE', payload: lastTrade }),
             setPlayerInventory: (inventory: InventoryItems) => dispatch({ type: 'SET_PLAYER_INVENTORY', payload: inventory }),
             setEnemyInventory: (inventory: InventoryItems) => dispatch({ type: 'SET_ENEMY_INVENTORY', payload: inventory }),
             setPlayerDiceValues: (diceValues: [number, number]) => dispatch({ type: 'SET_PLAYER_DICE_VALUES', payload: diceValues }),
-            setEnemyDiceValues: (diceValues: [number, number]) => dispatch({ type: 'SET_ENEMY_DICE_VALUES', payload: diceValues })
+            setEnemyDiceValues: (diceValues: [number, number]) => dispatch({ type: 'SET_ENEMY_DICE_VALUES', payload: diceValues }),
+            handleNext, 
         };
     
         return (

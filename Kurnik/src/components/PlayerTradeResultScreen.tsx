@@ -4,6 +4,7 @@ import GameContext from "../providers/GameContext";
 import RoosterImage from "./RoosterImage";
 import getHenImage from "./getHenImage";
 import Dice from "./Dice";
+import TradeResultDisplay from "./TradeResultDisplay";
 
 
 const PlayerTradeResultScreen: React.FC = () => {
@@ -22,11 +23,8 @@ const PlayerTradeResultScreen: React.FC = () => {
         <Dice value={playerDiceValues[1]} />
       </div>
       <div className="Block Block--Result">
-              <div className="Block__Earnings">
-                  <p>{lastTrade}</p>
-              </div>
 
-
+              <TradeResultDisplay/>
           <div className="Block__Inventory">
               <div className="Inventory__Item">
                   <p>{playerInventory.eggs}x</p>

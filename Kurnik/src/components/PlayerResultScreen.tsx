@@ -5,14 +5,13 @@ import RoosterImage from "./RoosterImage";
 import { useNavigate } from "react-router-dom";
 import getHenImage from "./getHenImage";
 import EarningsDisplay from "./EarningsDisplay";
+import TradeResultDisplay from "./TradeResultDisplay";
 
 
 const PlayerResultScreen: React.FC = () => {
-    const { playerInventory, playerDiceValues, lastEarnings } = useContext(GameContext);
+    const { playerInventory, playerDiceValues, lastEarnings, lastTrade, handleNext} = useContext(GameContext);
     const navigate = useNavigate();
-    const handleNext = () => {
-      navigate("/enemy-turn");
-    };
+
     
 
     return (
@@ -24,7 +23,11 @@ const PlayerResultScreen: React.FC = () => {
           <Dice value={playerDiceValues[1]} />
         </div>
         <div className="Block Block--Result">
-                <EarningsDisplay lastEarnings={lastEarnings}/>
+                {/* Zobrazit EarningsDisplay, pokud hráč odehrál kostkou a lastEarnings má položky */}
+            {lastEarnings.length > 0 && <EarningsDisplay lastEarnings={lastEarnings}/>}
+
+{/* Zobrazit TradeResultDisplay, pokud hráč provedl trade a lastTrade není null */}
+{lastTrade && <TradeResultDisplay/>}
 
 
             <div className="Block__Inventory">
