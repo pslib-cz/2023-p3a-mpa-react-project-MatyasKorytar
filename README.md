@@ -33,15 +33,6 @@ Lze vyměnit:
 - odkaz na gh-pages projektu
 - odkaz do repozitáře projektu, pokud pracuji v teamu a zde vývoj neprobíhá
 
-### Techniky
-
-- využití localStorage / sessionStorage
-- čtení dat z externího RestAPI (fetch)
-- operace DnD
-- využití react-routeru
-- funkčnost na mobilu (výjimka je předělávka komplexních deskových her)
-
-### Co není obsahem 
-
-- databáze
-- bez vlastních backend service
+- Enemy Logika Tradování (Rooster, ...)
+- Inventory BG (oddálit)
+- Upravit Css style
