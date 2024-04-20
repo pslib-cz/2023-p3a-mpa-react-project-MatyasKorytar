@@ -15,7 +15,7 @@ const EnemyEarningsDisplay: React.FC = () => {
     return (
         <div className="Block__Earnings">
             {enemyLastEarnings.map((earning, index) => (
-                <div key={index} className="Earnings__Item">
+                <div key={index} className="Earnings__Item Earnings__Item--Enemy">
                     <p>+{earning.quantity}x</p>
                     <img className="Item__Picture" src={typeToImage[earning.type as ItemType]} alt={earning.type} />
                 </div>

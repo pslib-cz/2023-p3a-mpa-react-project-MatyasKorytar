@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GameContext from "../providers/GameContext";
 import EnemyDiceDisplay from "./EnemyDiceDisplay";
 import EnemyEarningsDisplay from "./EnemyEarningsDisplay";
-import RoosterImage from "./RoosterImage";
+import RoosterImageEnemy from "./RoosterImageEnemy";
 import getHenImage from "./getHenImage";
 
 
@@ -17,12 +17,12 @@ const EnemyResultScreen: React.FC = () => {
   
     return (
       <div className="PlayerResultScreen">
-      <RoosterImage isOwned={enemyInventory.rooster} />
-      <img className="PlayerScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
+      <RoosterImageEnemy isOwned={enemyInventory.rooster} />
+      <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
       <div className="ResultScreen__Dices">
         <EnemyDiceDisplay/>
       </div>
-      <div className="Block Block--Result">
+      <div className="Block Block--Result Block--Enemy">
 
 
           <div className="Block__Inventory">

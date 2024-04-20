@@ -1,5 +1,5 @@
 import React from "react";
-import RoosterImage from "./RoosterImage";
+import RoosterImageEnemy from "./RoosterImageEnemy";
 import GameContext from "../providers/GameContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +19,8 @@ const EnemyScreen: React.FC = () =>{
   
     return (
       <div className="PlayerScreen">
-        <RoosterImage isOwned={enemyInventory.rooster} />
-        <img className="PlayerScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
+        <RoosterImageEnemy isOwned={enemyInventory.rooster} />
+        <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
         <EnemyInventoryDisplay/>
         <div className="ResultScreen__Dices">
          <Dice value={1} />

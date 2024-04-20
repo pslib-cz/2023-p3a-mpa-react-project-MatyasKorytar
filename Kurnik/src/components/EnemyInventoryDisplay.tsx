@@ -5,7 +5,7 @@ const EnemyInventoryDisplay: React.FC = () => {
     const { enemyInventory } = useContext(GameContext);
 
      return (
-          <div className="Block">
+          <div className="Block Block--Enemy">
               <div className="Block__Inventory Block__Inventory--Enemy">
                   <div className="Inventory__Item">
                       <p>{enemyInventory.eggs}x</p>

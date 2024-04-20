@@ -43,10 +43,20 @@ body {
 
 .PlayerScreen__HenHouse {
     width: 256px;
+    border: 3px solid #FF0000;
+    border-radius: 10px;
+}
+
+.EnemyScreen__HenHouse {
+    width: 256px;
+    border: 3px solid #0057FF;
+    border-radius: 10px;
 }
 
 .PlayerScreen__Rooster {
     width: 83px;
+    border: 3px solid #FF0000;
+    border-radius: 10px;
 }
 
 
@@ -89,6 +99,11 @@ body {
     position: absolute;
     bottom: 0px;
     gap: 10px;
+    border-top: 3px solid #FF0000;
+}
+
+.Block--Enemy {
+    border-top: 3px solid #0057FF;
 }
 
 .Block__Inventory {
@@ -181,4 +196,15 @@ body {
 
 .Block__Inventory--Enemy {
     margin-right: 250px;
+}
+
+.Earnings__Item--Enemy {
+    background-color: rgba(0, 87, 255, 0.3);
+    border: 3px solid #0057FF;
+}
+
+.EnemyScreen__Rooster{
+    border: 3px solid #0057FF;
+    border-radius: 10px;
+    width: 83px;
 }

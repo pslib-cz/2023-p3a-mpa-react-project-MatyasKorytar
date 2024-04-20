@@ -7,7 +7,7 @@ const EnemyDiceDisplay: React.FC = () => {
     const {enemyDiceValues} = useContext(GameContext);
 
     return (
-        <div>
+        <div className="Dices__div">
             <Dice value={enemyDiceValues[0]} />
             <Dice value={enemyDiceValues[1]} />
         </div>
