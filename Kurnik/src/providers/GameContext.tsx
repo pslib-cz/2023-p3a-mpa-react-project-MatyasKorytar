@@ -15,19 +15,23 @@ interface GameState {
     enemyDiceValues: [number, number];
     lastTrade: string | null;
     lastEarnings: { type: string; quantity: number }[]; 
+    enemyLastEarnings: { type: string; quantity: number }[]; 
   }
 
   type ActionType =
   | { type: 'SET_LAST_TRADE'; payload: string | null }
   | { type: 'HANDLE_TRADE'; payload: { tradeType: string } }
   | { type: 'HANDLE_ROLL'; payload: [number, number] }
-  | { type: 'HANDLE_ENEMY_MOVE' }
+  | { type: 'HANDLE_ENEMY_MOVE'; payload: [number, number] } // Přidané payload pro HANDLE_ENEMY_MOVE
+  | { type: 'UPDATE_ENEMY_EARNINGS'; payload: { type: string; quantity: number }[] } // Ujasnění typu payload
   | { type: 'SET_PLAYER_INVENTORY'; payload: InventoryItems }
   | { type: 'SET_ENEMY_INVENTORY'; payload: InventoryItems }
   | { type: 'SET_PLAYER_DICE_VALUES'; payload: [number, number] }
   | { type: 'SET_ENEMY_DICE_VALUES'; payload: [number, number] }
   | { type: 'RESET_LAST_EARNINGS' }
-  | { type: 'RESET_LAST_TRADE' };
+  | { type: 'RESET_LAST_TRADE' }
+  | { type: 'RESET_ENEMY_EARNINGS' };
+
 
 
   type GameContextType = {
@@ -42,6 +46,7 @@ interface GameState {
     handleNext: () => void;
     setLastTrade: (lastTrade: string | null) => void;
     lastEarnings: { type: string; quantity: number }[]; 
+    enemyLastEarnings: { type: string; quantity: number }[];
 };
 
 export const GameContext = createContext<GameContextType>({} as GameContextType);
@@ -53,9 +58,22 @@ const initialState: GameState = {
     enemyDiceValues: [1, 1],
     lastTrade: null,
     lastEarnings: [], 
+    enemyLastEarnings: [],
   };
 
+  function calculateEnemyEarnings(dice1: number, dice2: number): { type: string; quantity: number }[] {
+    let earnings = [];
+    // Přidání logiky pro výpočet zisků na základě hodnot kostek
+    if (dice1 <= 3) earnings.push({ type: 'egg', quantity: 1 });
+    if (dice1 >= 4 && dice1 <= 5) earnings.push({ type: 'chicken', quantity: 1 });
+    if (dice1 === 6) earnings.push({ type: 'hen', quantity: 1 });
 
+    if (dice2 <= 3) earnings.push({ type: 'egg', quantity: 1 });
+    if (dice2 >= 4 && dice2 <= 5) earnings.push({ type: 'chicken', quantity: 1 });
+    if (dice2 === 6) earnings.push({ type: 'hen', quantity: 1 });
+
+    return earnings;
+}
   
 function gameReducer(state: GameState, action: ActionType): GameState {
     switch (action.type) {
@@ -65,6 +83,11 @@ function gameReducer(state: GameState, action: ActionType): GameState {
             return { ...state, lastTrade: null };
         case 'SET_LAST_TRADE':
             return { ...state, lastTrade: action.payload };
+
+        case 'RESET_ENEMY_EARNINGS':
+                return { ...state, enemyLastEarnings: [] };
+        case 'UPDATE_ENEMY_EARNINGS':
+                return { ...state, enemyLastEarnings: action.payload };
 
         case 'HANDLE_TRADE':
             let tradeDescription = '';
@@ -175,10 +198,11 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                     playerDiceValues: action.payload
                 };
             
-            case 'HANDLE_ENEMY_MOVE':
-                const enemyDice1 = Math.floor(Math.random() * 6) + 1;
-                const enemyDice2 = Math.floor(Math.random() * 6) + 1;
-                let updateEnemyInventory = { ...state.enemyInventory };
+                case 'HANDLE_ENEMY_MOVE':
+                    const { payload } = action;
+                    const [enemyDice1, enemyDice2] = payload;
+                    let updateEnemyInventory = { ...state.enemyInventory };
+                    let enemyLastEarnings = calculateEnemyEarnings(enemyDice1, enemyDice2);
             
                 if (enemyDice1 === enemyDice2) {
                     switch (enemyDice1) {
@@ -226,11 +250,31 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                     updateEnemyInventory.eggs += enemyDice2 <= 3 ? 1 : 0;
                     updateEnemyInventory.chickens += enemyDice2 >= 4 && enemyDice2 <= 5 ? 1 : 0;
                     updateEnemyInventory.hens += enemyDice2 === 6 ? 1 : 0;
+                    if (enemyDice1 <= 3) {
+                        enemyLastEarnings.push({ type: 'egg', quantity: 1 });
+                    }
+                    if (enemyDice1 >= 4 && enemyDice1 <= 5) {
+                        enemyLastEarnings.push({ type: 'chicken', quantity: 1 });
+                    }
+                    if (enemyDice1 === 6) {
+                        enemyLastEarnings.push({ type: 'hen', quantity: 1 });
+                    }
+            
+                    if (enemyDice2 <= 3) {
+                        enemyLastEarnings.push({ type: 'egg', quantity: 1 });
+                    }
+                    if (enemyDice2 >= 4 && enemyDice2 <= 5) {
+                        enemyLastEarnings.push({ type: 'chicken', quantity: 1 });
+                    }
+                    if (enemyDice2 === 6) {
+                        enemyLastEarnings.push({ type: 'hen', quantity: 1 });
+                    }
                 }
             
                 return {
                     ...state,
                     enemyInventory: updateEnemyInventory,
+                    enemyLastEarnings, // Aktualizace stavu s nově vypočítanými zisky
                     enemyDiceValues: [enemyDice1, enemyDice2]
                 };
 
@@ -291,13 +335,26 @@ function gameReducer(state: GameState, action: ActionType): GameState {
     
         // Přetvoření handleEnemyMove na použití dispatch
         const handleEnemyMove = () => {
-            dispatch({ type: 'HANDLE_ENEMY_MOVE' });
+            // Generování hodnot kostek
+            const dice1 = Math.floor(Math.random() * 6) + 1;
+            const dice2 = Math.floor(Math.random() * 6) + 1;
+        
+            // Vypočet earnings na základě hodnot kostek
+            const earnings = calculateEnemyEarnings(dice1, dice2);
+        
+            // Vyvolání akce HANDLE_ENEMY_MOVE s payloadem hodnot kostek
+            dispatch({ type: 'HANDLE_ENEMY_MOVE', payload: [dice1, dice2] });
+        
+            // Aktualizace zisků nepřítele s vypočteným payloadem
+            dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: earnings });
         };
+        
     
         // Hodnoty poskytnuté kontextem
         const contextValue = {
             ...state,
             handleTrade,
+            enemyLastEarnings: state.enemyLastEarnings,
             handleRoll,
             handleEnemyMove,
             resetLastEarnings,

@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import GameContext from "../providers/GameContext";
 import Dice from "./Dice";
 import RoosterImage from "./RoosterImage";
-import { useNavigate } from "react-router-dom";
 import getHenImage from "./getHenImage";
 import EarningsDisplay from "./EarningsDisplay";
 import TradeResultDisplay from "./TradeResultDisplay";
@@ -10,7 +9,6 @@ import TradeResultDisplay from "./TradeResultDisplay";
 
 const PlayerResultScreen: React.FC = () => {
     const { playerInventory, playerDiceValues, lastEarnings, lastTrade, handleNext} = useContext(GameContext);
-    const navigate = useNavigate();
 
     
 

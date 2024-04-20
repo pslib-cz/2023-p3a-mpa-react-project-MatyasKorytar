@@ -172,3 +172,13 @@ body {
     padding-bottom: 10px;
     border-radius: 10px;
 }
+
+.NextButt--Enemy {
+    position: absolute;
+    right: 0;
+    bottom: 40px;
+}
+
+.Block__Inventory--Enemy {
+    margin-right: 250px;
+}

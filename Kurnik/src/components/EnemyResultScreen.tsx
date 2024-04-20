@@ -2,6 +2,10 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import GameContext from "../providers/GameContext";
 import EnemyDiceDisplay from "./EnemyDiceDisplay";
+import EnemyEarningsDisplay from "./EnemyEarningsDisplay";
+import RoosterImage from "./RoosterImage";
+import getHenImage from "./getHenImage";
+
 
 const EnemyResultScreen: React.FC = () => {
     const { enemyInventory } = useContext(GameContext);
@@ -12,18 +16,35 @@ const EnemyResultScreen: React.FC = () => {
     };
   
     return (
-      <div>
-        <h2>Výsledek tahu nepřítele</h2>
+      <div className="PlayerResultScreen">
+      <RoosterImage isOwned={enemyInventory.rooster} />
+      <img className="PlayerScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
+      <div className="ResultScreen__Dices">
         <EnemyDiceDisplay/>
-        {/* Zde můžete přidat detaily o akcích nepřítele a výsledcích */}
-        <h3>Aktuální inventář nepřítele:</h3>
-        {/* Příklad zobrazení inventáře nepřítele */}
-        <p>Vejce: {enemyInventory.eggs}</p>
-        <p>Kuřata: {enemyInventory.chickens}</p>
-        <p>Slepice: {enemyInventory.hens}</p>
-        <p>Kohout: {enemyInventory.rooster ? 'Ano' : 'Ne'}</p>
-        <button onClick={handleNext}>Další</button>
       </div>
+      <div className="Block Block--Result">
+
+
+          <div className="Block__Inventory">
+              <div className="Inventory__Item">
+                  <p>{enemyInventory.eggs}x</p>
+                  <img src="/others/Egg.png"/>
+              </div>
+              <div className="Inventory__Item">
+                  <p>{enemyInventory.chickens}x</p>
+                  <img src="/others/Chicken.png"/>
+              </div>
+           </div>   
+
+           <EnemyEarningsDisplay/>
+        
+          <button className="NextButt" onClick={handleNext}>
+                  <img src="/others/arrow2.png"/>
+                  <p>Next</p>
+                  <img src="/others/arrow2.png"/>
+          </button>
+      </div>
+    </div>
     );
 };
 
