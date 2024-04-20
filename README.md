@@ -32,7 +32,7 @@ Lze vyměnit:
 - [Odkaz na návrh ve Figmě](https://www.figma.com/file/JlE8cicrQmF1oupIM8Pmh9/Kurn%C3%ADk?type=design&mode=design&t=GfJ49UKFPqAt40W8-1)
 - odkaz na gh-pages projektu
 - odkaz do repozitáře projektu, pokud pracuji v teamu a zde vývoj neprobíhá
-
+# To Do
 - Enemy Logika Tradování (Rooster, ...)
 - Inventory BG (oddálit)
 - Upravit Css style
