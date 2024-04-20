@@ -8,7 +8,7 @@ import getHenImage from "./getHenImage";
 
 
 const EnemyResultScreen: React.FC = () => {
-    const { enemyInventory } = useContext(GameContext);
+    const { enemyInventory, diceEqualsMessage  } = useContext(GameContext);
     const navigate = useNavigate();
   
     const handleNext = () => {
@@ -21,6 +21,10 @@ const EnemyResultScreen: React.FC = () => {
       <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
       <div className="ResultScreen__Dices">
         <EnemyDiceDisplay/>
+      </div>
+      <div>
+      {diceEqualsMessage && 
+     <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
       </div>
       <div className="Block Block--Result Block--Enemy">
 

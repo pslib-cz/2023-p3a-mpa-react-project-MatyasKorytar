@@ -8,7 +8,7 @@ import TradeResultDisplay from "./TradeResultDisplay";
 
 
 const PlayerResultScreen: React.FC = () => {
-    const { playerInventory, playerDiceValues, lastEarnings, lastTrade, handleNext} = useContext(GameContext);
+    const { diceEqualsMessage, playerInventory, playerDiceValues, lastEarnings, lastTrade, handleNext} = useContext(GameContext);
 
     
 
@@ -19,6 +19,10 @@ const PlayerResultScreen: React.FC = () => {
         <div className="ResultScreen__Dices">
           <Dice value={playerDiceValues[0]} />
           <Dice value={playerDiceValues[1]} />
+        </div>
+        <div>
+            {diceEqualsMessage && !lastTrade && 
+            <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
         </div>
         <div className="Block Block--Result">
 

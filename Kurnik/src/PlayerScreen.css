@@ -208,3 +208,18 @@ body {
     border-radius: 10px;
     width: 83px;
 }
+
+.diceEqualsMessage {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 3px solid black;
+    border-radius: 10px;
+    position: fixed;
+    top: 65%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 1000;
+    font-size: 24px;
+    max-width: 80%;
+    width: 80%;
+}
