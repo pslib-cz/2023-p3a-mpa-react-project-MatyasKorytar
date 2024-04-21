@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import GameContext from "../providers/GameContext";
 
-type TradeType = "Eggs" | "Chickens" | "Hens" | "X"; // Definujeme omezenou množinu klíčů
+type TradeType = "Eggs" | "Chickens" | "Hens" | "X"; 
 
 interface TradeDetails {
   lost: {
@@ -30,14 +30,14 @@ const TradeResultDisplay = () => {
         lost: { quantity: -3, image: "/others/HenTrade.png" },
         gained: { quantity: 1, image: "/others/Rooster.png" },
       },
-      X: { // Přidáme výchozí prázdný objekt pro neznámý obchod
+      X: { 
         lost: { quantity: 0, image: "" },
         gained: { quantity: 0, image: "" },
       },
     };
     
   
-    // Získání detailů obchodu na základě popisu
+   
     const details = tradeDetails[lastTrade as TradeType];
 
     return (

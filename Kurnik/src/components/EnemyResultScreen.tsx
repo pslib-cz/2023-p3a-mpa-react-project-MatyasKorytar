@@ -12,7 +12,7 @@ const EnemyResultScreen: React.FC = () => {
     const navigate = useNavigate();
   
     const handleNext = () => {
-      navigate("/"); // Přesměruje zpět na tah hráče
+      navigate("/"); 
     };
   
     return (

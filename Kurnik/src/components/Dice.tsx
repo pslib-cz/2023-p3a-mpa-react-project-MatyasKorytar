@@ -1,7 +1,7 @@
 import React from "react";
 
 interface DiceProps {
-    value: number; // Definice typu pro 'value' jako number
+    value: number; 
   }
 
 

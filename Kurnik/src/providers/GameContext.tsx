@@ -24,8 +24,8 @@ interface GameState {
   | { type: 'SET_LAST_TRADE'; payload: string | null }
   | { type: 'HANDLE_TRADE'; payload: { tradeType: string } }
   | { type: 'HANDLE_ROLL'; payload: [number, number] }
-  | { type: 'HANDLE_ENEMY_MOVE'; payload: [number, number] } // Přidané payload pro HANDLE_ENEMY_MOVE
-  | { type: 'UPDATE_ENEMY_EARNINGS'; payload: { type: string; quantity: number }[] } // Ujasnění typu payload
+  | { type: 'HANDLE_ENEMY_MOVE'; payload: [number, number] } 
+  | { type: 'UPDATE_ENEMY_EARNINGS'; payload: { type: string; quantity: number }[] } 
   | { type: 'SET_PLAYER_INVENTORY'; payload: InventoryItems }
   | { type: 'SET_ENEMY_INVENTORY'; payload: InventoryItems }
   | { type: 'SET_PLAYER_DICE_VALUES'; payload: [number, number] }
@@ -69,7 +69,7 @@ const initialState: GameState = {
 
   function calculateEnemyEarnings(dice1: number, dice2: number): { type: string; quantity: number }[] {
     let earnings = [];
-    // Přidání logiky pro výpočet zisků na základě hodnot kostek
+    
     if (dice1 <= 3) earnings.push({ type: 'egg', quantity: 1 });
     if (dice1 >= 4 && dice1 <= 5) earnings.push({ type: 'chicken', quantity: 1 });
     if (dice1 === 6) earnings.push({ type: 'hen', quantity: 1 });
@@ -133,11 +133,11 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                 let updatedPlayerInventory = { ...state.playerInventory };
                 let message = "";
                 let updatedEnemyInventory = { ...state.enemyInventory };
-                let lastEarnings = []; // Resetování získaných položek
+                let lastEarnings = [];
                 if (dice1 === dice2) {
                     switch (dice1) {
                         case 1:
-                            // Liška: pokud není kohout, ztratí všechny slepice
+                           
                             if (!updatedPlayerInventory.rooster) {
                                 updatedPlayerInventory.hens = 0;
                                 message = "Fox snucks in! Unfortunatly you dont have a rooster, so all of yours chickens are gone!";
@@ -147,7 +147,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             }
                             break;
                         case 2:
-                            // Odevzdat kuře, pokud je dostupné
+                           
                             if (updatedPlayerInventory.chickens > 0) {
                                 updatedPlayerInventory.chickens -= 1;
                                 updatedEnemyInventory.chickens += 1;
@@ -155,7 +155,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             }
                             break;
                         case 3:
-                            // Odevzdat slepici, pokud je dostupná
+                            
                             if (updatedPlayerInventory.hens > 0) {
                                 updatedPlayerInventory.hens -= 1;
                                 updatedEnemyInventory.hens += 1;
@@ -163,17 +163,17 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             }
                             break;
                         case 4:
-                            // Sníst všechna vejce
+                     
                             updatedPlayerInventory.eggs = 0;
                             message = "Misery came and all the eggs had to be eaten on the farm.";
                             break;
                         case 5:
-                            // Ztrácí všechny slepice
+                           
                             updatedPlayerInventory.hens = 0;
                             message = "All chickens have been lost.";
                             break;
                         case 6:
-                            // Liška: pokud není kohout, ztratí všechny slepice
+                          
                             if (!updatedPlayerInventory.rooster) {
                                 updatedPlayerInventory.hens = 0;
                                 message = "Fox snucks in! Unfortunatly you dont have a rooster, so all of yours chickens are gone!";
@@ -231,7 +231,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                 if (enemyDice1 === enemyDice2) {
                     switch (enemyDice1) {
                         case 1:
-                            // Liška: pokud není kohout, ztratí všechny slepice
+                            
                             if (!updateEnemyInventory.rooster) {
                                 enemyMessage = "Fox snucks in! Unfortunatly Enemy dont have a rooster, so all of his chickens are gone!";
                                 updateEnemyInventory.hens = 0;
@@ -241,16 +241,16 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             }
                             break;
                         case 2:
-                            // Odevzdat kuře, pokud je dostupné
+                           
                             if (updateEnemyInventory.chickens > 0) {
                                 updateEnemyInventory.chickens -= 1;
                                 updatePlayerInventory.chickens += 1;
                                 enemyMessage = "Enemy have to donate one chicken to you!";
-                                // Předpokládá se aktualizace inventáře hráče nebo systému, ale to by mělo být řešeno mimo tento případ
+                                
                             }
                             break;
                         case 3:
-                            // Odevzdat slepici, pokud je dostupná
+                         
                             if (updateEnemyInventory.hens > 0) {
                                 updateEnemyInventory.hens -= 1;
                                 updatePlayerInventory.hens += 1;
@@ -258,17 +258,17 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             }
                             break;
                         case 4:
-                            // Sníst všechna vejce
+                        
                             updateEnemyInventory.eggs = 0;
                             enemyMessage = "Misery came and all the eggs had to be eaten on the farm.";
                             break;
                         case 5:
-                            // Ztrácí všechny slepice
+                            
                             updateEnemyInventory.hens = 0;
                             enemyMessage = "All chickens have been lost!";
                             break;
                         case 6:
-                            // Liška: pokud není kohout, ztratí všechny slepice
+                           
                             if (!updateEnemyInventory.rooster) {
                                 enemyMessage = "Fox snucks in! Unfortunatly Enemy dont have a rooster, so all of his chickens are gone!";
                                 updateEnemyInventory.hens = 0;
@@ -279,7 +279,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             break;
                     }
                 } else {
-                    // Aktualizace inventáře na základě hodnot kostek
+                    
                     updateEnemyInventory.eggs += enemyDice1 <= 3 ? 1 : 0;
                     updateEnemyInventory.chickens += enemyDice1 >= 4 && enemyDice1 <= 5 ? 1 : 0;
                     updateEnemyInventory.hens += enemyDice1 === 6 ? 1 : 0;
@@ -312,7 +312,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                     ...state,
                     enemyInventory: updateEnemyInventory,
                     playerInventory: updatePlayerInventory,
-                    enemyLastEarnings, // Aktualizace stavu s nově vypočítanými zisky
+                    enemyLastEarnings, 
                     enemyDiceValues: [enemyDice1, enemyDice2],
                     diceEqualsMessage: enemyMessage
                 };
@@ -361,37 +361,31 @@ function gameReducer(state: GameState, action: ActionType): GameState {
             navigate("/enemy-turn");
         };
     
-        // Přetvoření handleTrade na použití dispatch
+        
         const handleTrade = (tradeType: string) => {
             dispatch({ type: 'HANDLE_TRADE', payload: { tradeType } });
-            // Navigace po provedení obchodu
+            
             navigate("/player-result");
         };
     
-        // Přetvoření handleRoll na použití dispatch
+
         const handleRoll = (diceValues: [number, number]) => {
             dispatch({ type: 'RESET_LAST_DICEMESSAGE' });
             dispatch({ type: 'HANDLE_ROLL', payload: diceValues });
         };
     
-        // Přetvoření handleEnemyMove na použití dispatch
         const handleEnemyMove = () => {
-            // Generování hodnot kostek
             const dice1 = Math.floor(Math.random() * 6) + 1;
             const dice2 = Math.floor(Math.random() * 6) + 1;
         
-            // Vypočet earnings na základě hodnot kostek
             const earnings = calculateEnemyEarnings(dice1, dice2);
         
-            // Vyvolání akce HANDLE_ENEMY_MOVE s payloadem hodnot kostek
             dispatch({ type: 'HANDLE_ENEMY_MOVE', payload: [dice1, dice2] });
         
-            // Aktualizace zisků nepřítele s vypočteným payloadem
             dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: earnings });
         };
         
     
-        // Hodnoty poskytnuté kontextem
         const contextValue = {
             ...state,
             handleTrade,
@@ -406,7 +400,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
             setPlayerDiceValues: (diceValues: [number, number]) => dispatch({ type: 'SET_PLAYER_DICE_VALUES', payload: diceValues }),
             setEnemyDiceValues: (diceValues: [number, number]) => dispatch({ type: 'SET_ENEMY_DICE_VALUES', payload: diceValues }),
             handleNext,
-            diceEqualsMessage: state.diceEqualsMessage // Přidání zprávy o rovnosti kostek do kontextu
+            diceEqualsMessage: state.diceEqualsMessage 
         };
     
         return (
