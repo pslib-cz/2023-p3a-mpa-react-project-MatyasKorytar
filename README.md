@@ -36,3 +36,4 @@ Lze vyměnit:
 - Enemy Logika Tradování (Rooster, ...)
 - Inventory BG (oddálit)
 - Upravit Css style
+- Nezkopírovatelné stránky
