@@ -1,5 +1,4 @@
-import { stat } from "fs";
-import React, { useState, useReducer, createContext } from "react";
+import React, { useReducer, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 type InventoryItems = {

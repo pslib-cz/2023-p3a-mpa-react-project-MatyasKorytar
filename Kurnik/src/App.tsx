@@ -1,4 +1,3 @@
-import Game from './components/Game'
 import { GameProvider } from './providers/GameContext'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
