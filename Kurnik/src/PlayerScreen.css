@@ -223,3 +223,91 @@ body {
     max-width: 80%;
     width: 80%;
 }
+
+.Inventory__Item img {
+    width: 63px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+@media (min-width: 1000px) {
+    .PlayerScreen, .PlayerResultScreen {
+        flex-direction: row;
+        gap: 50px;
+    }
+
+    .Block {
+        left: 0;
+    }
+
+    .PlayerScreen__HenHouse, .EnemyScreen__HenHouse {
+        width: 384px;
+        border-radius: 15px;
+    }
+
+    .PlayerScreen__Rooster, .EnemyScreen__Rooster {
+        width: 124px;
+        border-radius: 15px;
+    }
+
+    .DicePicture {
+        width: 95px;
+    } 
+
+    .Dices {
+        width: 320px;
+    }
+
+    .Block__Inventory {
+        flex-direction: row;
+    }
+
+    .Inventory__Item img {
+        width: 93px;
+    }
+    .Inventory__Item p {
+        font-size: 26px;
+        padding-right: 6px;
+    }
+
+    .TradeFlex {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        place-items: center;
+    }
+
+    .Trade_Item {
+        width: 82px;
+        height: 67px;
+    }
+
+    .Item__Picture {
+        width: 65px;
+        height: 65px;
+    }
+
+    .Earnings__Item p {
+        font-size: 20px;
+    }
+
+    .NextButt {
+        padding: 20px 5px;
+    }
+
+    .NextButt p {
+        font-size: 32px;
+    }
+
+    .NextButt--Enemy {
+        bottom: 20px;
+    }
+
+    .Block__Earnings {
+        font-size: 24px;
+        flex-direction: row;
+    }
+
+    .Earnings__Item {
+        padding: 5px 20px;
+    }
+} 
