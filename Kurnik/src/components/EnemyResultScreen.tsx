@@ -5,10 +5,11 @@ import EnemyDiceDisplay from "./EnemyDiceDisplay";
 import EnemyEarningsDisplay from "./EnemyEarningsDisplay";
 import RoosterImageEnemy from "./RoosterImageEnemy";
 import getHenImage from "./getHenImage";
+import EnemyTradeResultDisplay from "./EnemyTradeResultDisplay";
 
 
 const EnemyResultScreen: React.FC = () => {
-    const { enemyInventory, diceEqualsMessage  } = useContext(GameContext);
+    const { enemyInventory, diceEqualsMessage, lastEnemyTrade, enemyLastEarnings  } = useContext(GameContext);
     const navigate = useNavigate();
   
     const handleNext = () => {
@@ -40,7 +41,9 @@ const EnemyResultScreen: React.FC = () => {
               </div>
            </div>   
 
-           <EnemyEarningsDisplay/>
+
+           {!lastEnemyTrade && enemyLastEarnings && <EnemyEarningsDisplay/>}
+          {lastEnemyTrade && <EnemyTradeResultDisplay/>}
         
           <button className="NextButt" onClick={handleNext}>
                   <img src="/others/arrow2.png"/>

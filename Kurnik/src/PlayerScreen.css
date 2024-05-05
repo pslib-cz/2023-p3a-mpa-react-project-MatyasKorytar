@@ -254,7 +254,7 @@ body {
         width: 95px;
     } 
 
-    .Dices {
+    .Dices, .ResultScreen__Dices {
         width: 320px;
     }
 

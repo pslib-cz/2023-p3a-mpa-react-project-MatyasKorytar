@@ -14,6 +14,7 @@ interface GameState {
     playerDiceValues: [number, number];
     enemyDiceValues: [number, number];
     lastTrade: string | null;
+    lastEnemyTrade: string | null;
     lastEarnings: { type: string; quantity: number }[]; 
     enemyLastEarnings: { type: string; quantity: number }[]; 
     diceEqualsMessage: string;
@@ -21,6 +22,7 @@ interface GameState {
 
   type ActionType =
   | { type: 'SET_LAST_TRADE'; payload: string | null }
+  | { type: 'SET_ENEMY_LAST_TRADE'; payload: string | null }
   | { type: 'HANDLE_TRADE'; payload: { tradeType: string } }
   | { type: 'HANDLE_ROLL'; payload: [number, number] }
   | { type: 'HANDLE_ENEMY_MOVE'; payload: [number, number] } 
@@ -31,6 +33,7 @@ interface GameState {
   | { type: 'SET_ENEMY_DICE_VALUES'; payload: [number, number] }
   | { type: 'RESET_LAST_EARNINGS' }
   | { type: 'RESET_LAST_TRADE' }
+  | { type: 'RESET_ENEMY_LAST_TRADE' }
   | { type: 'RESET_ENEMY_EARNINGS' }
   | { type: 'RESET_LAST_DICEMESSAGE' };
 
@@ -40,6 +43,7 @@ interface GameState {
   type GameContextType = {
     playerInventory: InventoryItems;
     lastTrade: string | null;
+    lastEnemyTrade: string | null;
     enemyInventory: InventoryItems;
     playerDiceValues: [number, number];
     enemyDiceValues: [number, number];
@@ -61,6 +65,7 @@ const initialState: GameState = {
     playerDiceValues: [1, 1],
     enemyDiceValues: [1, 1],
     lastTrade: null,
+    lastEnemyTrade: null,
     lastEarnings: [], 
     enemyLastEarnings: [],
     diceEqualsMessage: "",
@@ -77,6 +82,10 @@ const initialState: GameState = {
     if (dice2 >= 4 && dice2 <= 5) earnings.push({ type: 'chicken', quantity: 1 });
     if (dice2 === 6) earnings.push({ type: 'hen', quantity: 1 });
 
+    if (dice1 == dice2) {
+        earnings = []
+    }
+
     return earnings;
 }
   
@@ -91,10 +100,18 @@ function gameReducer(state: GameState, action: ActionType): GameState {
         case 'SET_LAST_TRADE':
             return { ...state, lastTrade: action.payload };
 
+        case 'RESET_ENEMY_LAST_TRADE':
+            return { ...state, lastEnemyTrade: null };
+
         case 'RESET_ENEMY_EARNINGS':
                 return { ...state, enemyLastEarnings: [] };
         case 'UPDATE_ENEMY_EARNINGS':
                 return { ...state, enemyLastEarnings: action.payload };
+
+
+        case 'SET_ENEMY_LAST_TRADE':
+            return { ...state, lastEnemyTrade: action.payload }
+
 
         case 'HANDLE_TRADE':
             let tradeDescription = '';
@@ -211,6 +228,10 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                   if (dice2 === 6) {
                     lastEarnings.push({ type: 'hen', quantity: 1 });
                   }
+
+                if (dice1 == dice2) {
+                    lastEarnings = []
+                }
             
                 return {
                     ...state,
@@ -236,6 +257,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                                 updateEnemyInventory.hens = 0;
                             }
                             else {
+                                enemyLastEarnings = [];
                                 enemyMessage = "Fox snucks in! Luckily Enemy have a rooster.";
                             }
                             break;
@@ -244,6 +266,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             if (updateEnemyInventory.chickens > 0) {
                                 updateEnemyInventory.chickens -= 1;
                                 updatePlayerInventory.chickens += 1;
+                                enemyLastEarnings = [];
                                 enemyMessage = "Enemy have to donate one chicken to you!";
                                 
                             }
@@ -253,17 +276,20 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                             if (updateEnemyInventory.hens > 0) {
                                 updateEnemyInventory.hens -= 1;
                                 updatePlayerInventory.hens += 1;
+                                enemyLastEarnings = [];
                                 enemyMessage = "Enemy have to donate one hen to you!";
                             }
                             break;
                         case 4:
                         
                             updateEnemyInventory.eggs = 0;
+                            enemyLastEarnings = [];
                             enemyMessage = "Misery came and all the eggs had to be eaten on the farm.";
                             break;
                         case 5:
                             
                             updateEnemyInventory.hens = 0;
+                            enemyLastEarnings = [];
                             enemyMessage = "All chickens have been lost!";
                             break;
                         case 6:
@@ -273,6 +299,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                                 updateEnemyInventory.hens = 0;
                             }
                             else {
+                                enemyLastEarnings = [];
                                 enemyMessage = "Fox snucks in! Luckily Enemy have a rooster.";
                             }
                             break;
@@ -305,6 +332,10 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                     if (enemyDice2 === 6) {
                         enemyLastEarnings.push({ type: 'hen', quantity: 1 });
                     }
+                }
+
+                if (enemyDice1 == enemyDice2) {
+                    enemyLastEarnings = [];
                 }
             
                 return {
@@ -351,11 +382,13 @@ function gameReducer(state: GameState, action: ActionType): GameState {
         const navigate = useNavigate();
         const resetLastEarnings = () => dispatch({ type: 'RESET_LAST_EARNINGS' });
         const resetLastTrade = () => dispatch({ type: 'RESET_LAST_TRADE' });
+        const resetEnemyLastTrade = () => dispatch({ type: "RESET_ENEMY_LAST_TRADE" });
         
         
         const handleNext = () => {
             resetLastEarnings();
             resetLastTrade();
+            resetEnemyLastTrade();
             dispatch({ type: 'RESET_LAST_DICEMESSAGE' });
             navigate("/enemy-turn");
         };
@@ -374,15 +407,51 @@ function gameReducer(state: GameState, action: ActionType): GameState {
         };
     
         const handleEnemyMove = () => {
-            const dice1 = Math.floor(Math.random() * 6) + 1;
-            const dice2 = Math.floor(Math.random() * 6) + 1;
+            let updatedEnemyInventory = { ...state.enemyInventory };
+            let updatedEnemyLastEarnings = [...state.enemyLastEarnings]; // Copy previous earnings to update
+            let tradeDescription = ''; // To store description of the trade
         
-            const earnings = calculateEnemyEarnings(dice1, dice2);
+            // Check for possible trades and perform them
+            if (updatedEnemyInventory.hens >= 3 && !updatedEnemyInventory.rooster) {
+                updatedEnemyInventory.hens -= 3;
+                updatedEnemyInventory.rooster = true;
+                tradeDescription = 'Hens';
+                updatedEnemyLastEarnings.push({ type: 'rooster', quantity: 1 });
+                dispatch({ type: 'SET_ENEMY_INVENTORY', payload: updatedEnemyInventory });
+                dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: updatedEnemyLastEarnings });
+                dispatch({ type: 'SET_ENEMY_LAST_TRADE', payload: tradeDescription });
+                navigate("/enemy-result");
+            } else if (updatedEnemyInventory.chickens >= 3) {
+                updatedEnemyInventory.chickens -= 3;
+                updatedEnemyInventory.hens += 1;
+                tradeDescription = 'Chickens';
+                updatedEnemyLastEarnings.push({ type: 'hen', quantity: 1 });
+                dispatch({ type: 'SET_ENEMY_INVENTORY', payload: updatedEnemyInventory });
+                dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: updatedEnemyLastEarnings });
+                dispatch({ type: 'SET_ENEMY_LAST_TRADE', payload: tradeDescription });
+                navigate("/enemy-result");
+            } else if (updatedEnemyInventory.eggs >= 3) {
+                updatedEnemyInventory.eggs -= 3;
+                updatedEnemyInventory.chickens += 1;
+                tradeDescription = 'Eggs';
+                updatedEnemyLastEarnings.push({ type: 'chicken', quantity: 1 });
+                dispatch({ type: 'SET_ENEMY_INVENTORY', payload: updatedEnemyInventory });
+                dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: updatedEnemyLastEarnings });
+                dispatch({ type: 'SET_ENEMY_LAST_TRADE', payload: tradeDescription });
+                navigate("/enemy-result");
+            } else {
+                // If no trades were made, proceed with the dice roll
+                const dice1 = Math.floor(Math.random() * 6) + 1;
+                const dice2 = Math.floor(Math.random() * 6) + 1;
         
-            dispatch({ type: 'HANDLE_ENEMY_MOVE', payload: [dice1, dice2] });
-        
-            dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: earnings });
+                const earnings = calculateEnemyEarnings(dice1, dice2);
+                dispatch({ type: 'HANDLE_ENEMY_MOVE', payload: [dice1, dice2] });
+                dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: earnings });
+                navigate("/enemy-result");
+            }
         };
+
+        
         
     
         const contextValue = {

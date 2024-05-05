@@ -11,7 +11,7 @@ const typeToImage: Record<ItemType, string> = {
 
 const EnemyEarningsDisplay: React.FC = () => {
     const { enemyLastEarnings } = useContext(GameContext);
-
+    console.log(enemyLastEarnings);
     return (
         <div className="Block__Earnings">
             {enemyLastEarnings.map((earning, index) => (
@@ -19,6 +19,7 @@ const EnemyEarningsDisplay: React.FC = () => {
                     <p>+{earning.quantity}x</p>
                     <img className="Item__Picture" src={typeToImage[earning.type as ItemType]} alt={earning.type} />
                 </div>
+
             ))}
         </div>
     );
