@@ -6,7 +6,7 @@ interface DiceProps {
 
 
 const Dice: React.FC<DiceProps> = ({ value }) => {
-    const imageUrl = `public/Dice/dice${value}.png`
+    const imageUrl = `/Dice/dice${value}.png`
 
     return <img src={imageUrl} className="DicePicture" alt={`Kostka s hodnotou ${value}`}/>
 };
