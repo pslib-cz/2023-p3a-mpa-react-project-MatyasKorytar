@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import React, { useReducer, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -70,7 +71,6 @@ const initialState: GameState = {
     enemyLastEarnings: [],
     diceEqualsMessage: "",
   };
-
 
   function calculateEnemyEarnings(dice1: number, dice2: number): { type: string; quantity: number }[] {
     let earnings = [];
@@ -390,8 +390,15 @@ function gameReducer(state: GameState, action: ActionType): GameState {
             resetLastTrade();
             resetEnemyLastTrade();
             dispatch({ type: 'RESET_LAST_DICEMESSAGE' });
-            navigate("/enemy-turn");
-        };
+                if (state.playerInventory.hens >= 9) {
+                    console.log("End?", state.playerInventory.hens);
+                    navigate("/end-game");
+                } else {
+                    console.log("Player?", state.playerInventory.hens);
+                    navigate("/enemy-turn");
+                }
+            };
+        
     
         
         const handleTrade = (tradeType: string) => {
@@ -449,6 +456,8 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                 dispatch({ type: 'UPDATE_ENEMY_EARNINGS', payload: earnings });
                 navigate("/enemy-result");
             }
+
+            
         };
 
         

@@ -16,8 +16,14 @@ const EnemyResultScreen: React.FC = () => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-      navigate("/player-screen");
-    };
+      if (enemyInventory.hens >= 9) {
+          console.log("End?", enemyInventory.hens);
+          navigate("/end-game");
+      } else {
+          console.log("Player?", enemyInventory.hens);
+          navigate("/player-screen");
+      }
+  };
 
     return (
       <div className="PlayerResultScreen">
