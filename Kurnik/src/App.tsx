@@ -1,5 +1,6 @@
 import { GameProvider } from './providers/GameContext';
 import './App.css';
+import EndPage from './components/EndPage';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import MainMenu from './components/MainMenu';
 import PlayerScreen from './components/PlayerScreen';
@@ -18,7 +19,8 @@ function App() {
           <Route path="/player-result" element={<PlayerResultScreen />} />
           <Route path="/enemy-turn" element={<EnemyScreen />} />
           <Route path="/enemy-result" element={<EnemyResultScreen />} />
-          <Route path="/rules" element={<RulesScreen />} />  // Přidání nové cesty pro RulesScreen
+          <Route path="/rules" element={<RulesScreen />} />  
+          <Route path="/end-game" element={<EndPage />} />
         </Routes>
       </GameProvider>
     </Router>

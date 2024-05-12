@@ -71,6 +71,7 @@ const initialState: GameState = {
     diceEqualsMessage: "",
   };
 
+
   function calculateEnemyEarnings(dice1: number, dice2: number): { type: string; quantity: number }[] {
     let earnings = [];
     
@@ -384,7 +385,6 @@ function gameReducer(state: GameState, action: ActionType): GameState {
         const resetLastTrade = () => dispatch({ type: 'RESET_LAST_TRADE' });
         const resetEnemyLastTrade = () => dispatch({ type: "RESET_ENEMY_LAST_TRADE" });
         
-        
         const handleNext = () => {
             resetLastEarnings();
             resetLastTrade();
@@ -405,13 +405,13 @@ function gameReducer(state: GameState, action: ActionType): GameState {
             dispatch({ type: 'RESET_LAST_DICEMESSAGE' });
             dispatch({ type: 'HANDLE_ROLL', payload: diceValues });
         };
+
     
         const handleEnemyMove = () => {
             let updatedEnemyInventory = { ...state.enemyInventory };
-            let updatedEnemyLastEarnings = [...state.enemyLastEarnings]; // Copy previous earnings to update
-            let tradeDescription = ''; // To store description of the trade
+            let updatedEnemyLastEarnings = [...state.enemyLastEarnings];
+            let tradeDescription = '';
         
-            // Check for possible trades and perform them
             if (updatedEnemyInventory.hens >= 3 && !updatedEnemyInventory.rooster) {
                 updatedEnemyInventory.hens -= 3;
                 updatedEnemyInventory.rooster = true;
@@ -440,7 +440,7 @@ function gameReducer(state: GameState, action: ActionType): GameState {
                 dispatch({ type: 'SET_ENEMY_LAST_TRADE', payload: tradeDescription });
                 navigate("/enemy-result");
             } else {
-                // If no trades were made, proceed with the dice roll
+           
                 const dice1 = Math.floor(Math.random() * 6) + 1;
                 const dice2 = Math.floor(Math.random() * 6) + 1;
         
