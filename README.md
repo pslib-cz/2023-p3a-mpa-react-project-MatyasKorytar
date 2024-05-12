@@ -31,8 +31,3 @@ Lze vyměnit:
 
 - [Odkaz na návrh ve Figmě](https://www.figma.com/file/JlE8cicrQmF1oupIM8Pmh9/Kurn%C3%ADk?type=design&mode=design&t=GfJ49UKFPqAt40W8-1)
 - [GitHub Pages](https://pslib-cz.github.io/2023-p3a-mpa-react-project-MatyasKorytar/)
-# To Do
-- Enemy Logika Tradování (Rooster, ...)
-- Inventory BG (oddálit)
-- Upravit Css style
-- Nezkopírovatelné stránky
