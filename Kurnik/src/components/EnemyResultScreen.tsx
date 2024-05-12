@@ -7,48 +7,47 @@ import RoosterImageEnemy from "./RoosterImageEnemy";
 import getHenImage from "./getHenImage";
 import EnemyTradeResultDisplay from "./EnemyTradeResultDisplay";
 
+import eggImage from "../assets/others/Egg.png";
+import chickenImage from "../assets/others/Chicken.png";
+import arrowImage from "../assets/others/arrow2.png";
 
 const EnemyResultScreen: React.FC = () => {
-    const { enemyInventory, diceEqualsMessage, lastEnemyTrade, enemyLastEarnings  } = useContext(GameContext);
+    const { enemyInventory, diceEqualsMessage, lastEnemyTrade, enemyLastEarnings } = useContext(GameContext);
     const navigate = useNavigate();
-  
+
     const handleNext = () => {
-      navigate("/"); 
+      navigate("/");
     };
-  
+
     return (
       <div className="PlayerResultScreen">
       <RoosterImageEnemy isOwned={enemyInventory.rooster} />
       <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
       <div className="ResultScreen__Dices">
-        <EnemyDiceDisplay/>
+        <EnemyDiceDisplay />
       </div>
       <div>
       {diceEqualsMessage && 
      <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
       </div>
       <div className="Block Block--Result Block--Enemy">
-
-
           <div className="Block__Inventory">
               <div className="Inventory__Item">
                   <p>{enemyInventory.eggs}x</p>
-                  <img src="/others/Egg.png"/>
+                  <img src={eggImage} alt="Eggs"/>
               </div>
               <div className="Inventory__Item">
                   <p>{enemyInventory.chickens}x</p>
-                  <img src="/others/Chicken.png"/>
+                  <img src={chickenImage} alt="Chickens"/>
               </div>
-           </div>   
-
-
-           {!lastEnemyTrade && enemyLastEarnings && <EnemyEarningsDisplay/>}
-          {lastEnemyTrade && <EnemyTradeResultDisplay/>}
+           </div>
+           {!lastEnemyTrade && enemyLastEarnings && <EnemyEarningsDisplay />}
+          {lastEnemyTrade && <EnemyTradeResultDisplay />}
         
           <button className="NextButt" onClick={handleNext}>
-                  <img src="/others/arrow2.png"/>
+                  <img src={arrowImage} alt="Arrow"/>
                   <p>Next</p>
-                  <img src="/others/arrow2.png"/>
+                  <img src={arrowImage} alt="Arrow"/>
           </button>
       </div>
     </div>

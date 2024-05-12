@@ -1,12 +1,17 @@
-
 import React from "react";
+
+
+import eggImage from "../assets/others/EggTrade.png";
+import chickenImage from "../assets/others/ChickenTrade.png";
+import henImage from "../assets/others/HenTrade.png";
 
 type ItemType = 'egg' | 'chicken' | 'hen';
 
+
 const typeToImage: Record<ItemType, string> = {
-  egg: "/others/EggTrade.png",
-  chicken: "/others/ChickenTrade.png",
-  hen: "/others/HenTrade.png",
+  egg: eggImage,
+  chicken: chickenImage,
+  hen: henImage,
 };
 
 const EarningsDisplay: React.FC<{ lastEarnings: { type: string; quantity: number }[] }> = ({ lastEarnings }) => {

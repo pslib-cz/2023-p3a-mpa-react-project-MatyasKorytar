@@ -1,6 +1,9 @@
-const RoosterImage = ({ isOwned }: { isOwned: boolean }) => {
-    const imagePath = isOwned ? 'RoosterOwned1.png' : 'RoosterOwned0.png';
-    return <img className="PlayerScreen__Rooster" src={`/rooster/${imagePath}`} alt="Rooster" />;
-  };
+import RoosterOwned1 from "../assets/rooster/RoosterOwned1.png";
+import RoosterOwned0 from "../assets/rooster/RoosterOwned0.png";
 
-  export default RoosterImage;
+const RoosterImage = ({ isOwned }: { isOwned: boolean }) => {
+    const imageSrc = isOwned ? RoosterOwned1 : RoosterOwned0;
+    return <img className="PlayerScreen__Rooster" src={imageSrc} alt="Rooster" />;
+};
+
+export default RoosterImage;

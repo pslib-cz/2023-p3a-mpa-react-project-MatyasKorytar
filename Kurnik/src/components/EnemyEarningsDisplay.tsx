@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import GameContext from '../providers/GameContext';
 
+import eggImage from '../assets/others/EggTrade.png';
+import chickenImage from '../assets/others/ChickenTrade.png';
+import henImage from '../assets/others/HenTrade.png';
+
 type ItemType = 'egg' | 'chicken' | 'hen';
 
 const typeToImage: Record<ItemType, string> = {
-  egg: "/others/EggTrade.png",
-  chicken: "/others/ChickenTrade.png",
-  hen: "/others/HenTrade.png",
+  egg: eggImage,
+  chicken: chickenImage,
+  hen: henImage,
 };
 
 const EnemyEarningsDisplay: React.FC = () => {
@@ -19,7 +23,6 @@ const EnemyEarningsDisplay: React.FC = () => {
                     <p>+{earning.quantity}x</p>
                     <img className="Item__Picture" src={typeToImage[earning.type as ItemType]} alt={earning.type} />
                 </div>
-
             ))}
         </div>
     );

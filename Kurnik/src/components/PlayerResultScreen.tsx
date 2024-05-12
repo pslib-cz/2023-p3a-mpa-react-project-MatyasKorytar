@@ -6,11 +6,12 @@ import getHenImage from "./getHenImage";
 import EarningsDisplay from "./EarningsDisplay";
 import TradeResultDisplay from "./TradeResultDisplay";
 
+import eggImage from "../assets/others/Egg.png";
+import chickenImage from "../assets/others/Chicken.png";
+import arrowImage from "../assets/others/arrow2.png";
 
 const PlayerResultScreen: React.FC = () => {
-    const { diceEqualsMessage, playerInventory, playerDiceValues, lastEarnings, lastTrade, handleNext} = useContext(GameContext);
-
-    
+    const { diceEqualsMessage, playerInventory, playerDiceValues, lastEarnings, lastTrade, handleNext } = useContext(GameContext);
 
     return (
       <div className="PlayerResultScreen">
@@ -25,31 +26,27 @@ const PlayerResultScreen: React.FC = () => {
             <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
         </div>
         <div className="Block Block--Result">
-
-
             <div className="Block__Inventory">
                 <div className="Inventory__Item">
                     <p>{playerInventory.eggs}x</p>
-                    <img src="/others/Egg.png"/>
+                    <img src={eggImage} alt="Eggs"/>
                 </div>
                 <div className="Inventory__Item">
                     <p>{playerInventory.chickens}x</p>
-                    <img src="/others/Chicken.png"/>
+                    <img src={chickenImage} alt="Chickens"/>
                 </div>
-             </div>   
+            </div>   
 
-             {lastEarnings.length > 0 && <EarningsDisplay lastEarnings={lastEarnings}/>}
-
-             {lastTrade && <TradeResultDisplay/>}  
-          
+            {lastEarnings.length > 0 && <EarningsDisplay lastEarnings={lastEarnings}/>}
+            {lastTrade && <TradeResultDisplay/>}  
             <button className="NextButt" onClick={handleNext}>
-                    <img src="/others/arrow2.png"/>
+                    <img src={arrowImage} alt="Next Arrow"/>
                     <p>Next</p>
-                    <img src="/others/arrow2.png"/>
+                    <img src={arrowImage} alt="Next Arrow"/>
             </button>
         </div>
       </div>
     );
   };
   
-  export default PlayerResultScreen;
+export default PlayerResultScreen;

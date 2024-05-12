@@ -7,10 +7,13 @@ import getHenImage from "./getHenImage";
 import EnemyInventoryDisplay from "./EnemyInventoryDisplay";
 import Dice from "./Dice";
 
-const EnemyScreen: React.FC = () =>{
+// Import obrázku šipky
+import arrowImage from "../assets/others/arrow2.png";
+
+const EnemyScreen: React.FC = () => {
     const navigate = useNavigate();
     const { handleEnemyMove } = useContext(GameContext);
-    const {enemyInventory } = useContext(GameContext);
+    const { enemyInventory } = useContext(GameContext);
 
     const handleEnemyTurn = () => {
       handleEnemyMove();
@@ -21,15 +24,15 @@ const EnemyScreen: React.FC = () =>{
       <div className="PlayerScreen">
         <RoosterImageEnemy isOwned={enemyInventory.rooster} />
         <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
-        <EnemyInventoryDisplay/>
+        <EnemyInventoryDisplay />
         <div className="ResultScreen__Dices">
-         <Dice value={1} />
-         <Dice value={1} />
-       </div>
-       <button className="NextButt NextButt--Enemy" onClick={handleEnemyTurn}>
-                  <img src="/others/arrow2.png"/>
-                  <p>Next</p>
-                  <img src="/others/arrow2.png"/>
+          <Dice value={1} />
+          <Dice value={1} />
+        </div>
+        <button className="NextButt NextButt--Enemy" onClick={handleEnemyTurn}>
+          <img src={arrowImage} alt="Next Arrow"/>
+          <p>Next</p>
+          <img src={arrowImage} alt="Next Arrow"/>
         </button>
       </div>
     );

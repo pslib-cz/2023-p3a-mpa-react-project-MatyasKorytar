@@ -1,7 +1,13 @@
 import { useContext } from "react";
 import GameContext from "../providers/GameContext";
 
-type TradeType = "Eggs" | "Chickens" | "Hens" | "X"; 
+// Import obrázků
+import eggTradeImage from "../assets/others/EggTrade.png";
+import chickenTradeImage from "../assets/others/ChickenTrade.png";
+import henTradeImage from "../assets/others/HenTrade.png";
+import roosterImage from "../assets/others/Rooster.png";
+
+type TradeType = "Eggs" | "Chickens" | "Hens" | "X";
 
 interface TradeDetails {
   lost: {
@@ -19,24 +25,23 @@ const EnemyTradeResultDisplay = () => {
 
     const tradeDetails: Record<TradeType, TradeDetails> = {
       Eggs: {
-        lost: { quantity: -3, image: "/others/EggTrade.png" },
-        gained: { quantity: 1, image: "/others/ChickenTrade.png" },
+        lost: { quantity: -3, image: eggTradeImage },
+        gained: { quantity: 1, image: chickenTradeImage },
       },
       Chickens: {
-        lost: { quantity: -3, image: "/others/ChickenTrade.png" },
-        gained: { quantity: 1, image: "/others/HenTrade.png" },
+        lost: { quantity: -3, image: chickenTradeImage },
+        gained: { quantity: 1, image: henTradeImage },
       },
       Hens: {
-        lost: { quantity: -3, image: "/others/HenTrade.png" },
-        gained: { quantity: 1, image: "/others/Rooster.png" },
+        lost: { quantity: -3, image: henTradeImage },
+        gained: { quantity: 1, image: roosterImage },
       },
-      X: { 
+      X: {
         lost: { quantity: 0, image: "" },
         gained: { quantity: 0, image: "" },
       },
     };
 
-    // Ensure a valid trade type is used, defaulting to "X" if not found
     const details = tradeDetails[lastEnemyTrade as TradeType || "X"];
 
     return (
@@ -53,4 +58,4 @@ const EnemyTradeResultDisplay = () => {
     );
 };
 
-export default EnemyTradeResultDisplay
+export default EnemyTradeResultDisplay;
