@@ -16,7 +16,7 @@ const EnemyResultScreen: React.FC = () => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-      navigate("/");
+      navigate("/player-screen");
     };
 
     return (
