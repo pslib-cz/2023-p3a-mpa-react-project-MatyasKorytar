@@ -1,0 +1,446 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+#root {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url(/bg/Bg-Mobile.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Itim", cursive;
+    justify-content: center;
+    color: white;
+}
+
+
+.Dices__div {
+    display: Flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.Dices {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid white;
+    width: 256px;
+}
+
+.DicePicture {
+    width: 63px;
+}
+
+.PlayerScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto;
+    margin-top: -200px;
+}
+
+.PlayerScreen__HenHouse {
+    width: 256px;
+    border: 3px solid #FF0000;
+    border-radius: 10px;
+}
+
+.EnemyScreen__HenHouse {
+    width: 256px;
+    border: 3px solid #0057FF;
+    border-radius: 10px;
+}
+
+.PlayerScreen__Rooster {
+    width: 83px;
+    border: 3px solid #FF0000;
+    border-radius: 10px;
+}
+
+
+.Trade_Item {
+    width: 55px;
+    height: 45px;
+}
+
+.PlayingStatus__Name{
+    color: black;
+    margin: 0;
+    font-size: 45px;
+}
+
+.PlayingStatus {
+    position: fixed;
+    top: 40px;
+    border-radius: 20px;
+    left: 2%;
+    transform: rotate(-35deg);
+    border: 3px solid black;
+    padding: 0px 8px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.TradeButton {
+    border: 3px solid white;
+    padding: 0px 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.Trade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.Menu {
+    display: flex;
+    flex-direction: column;
+    gap: 150px;
+}
+
+.Menu__Button{
+    font-size: 48px;
+    width: 277px;
+    height: 66px;
+    border: 4px solid white;
+    border-radius: 10px;
+    color: white;
+    padding-bottom: 5px;
+    background-color:  rgba(0, 0, 0, 0.3);
+}
+
+.Trade_Arrow {
+    width: 36px;
+    height: 36px;
+}
+
+.Rules__Image {
+    width: 350px;
+    border-radius: 10px;
+}
+
+.Rules {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.Inventory__Item {
+    display: flex;
+    gap: 5px;
+}
+
+.Block {
+    height: 215px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(/bg/ItemsBG.jpg);
+    position: absolute;
+    bottom: 0px;
+    gap: 10px;
+    border-top: 3px solid #FF0000;
+}
+
+.Block--Enemy {
+    border-top: 3px solid #0057FF;
+}
+
+.Block__Inventory {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 60px;
+}
+
+.TradeFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.NextButt {
+    padding: 5px 0px;
+    border: 3px solid white;
+    border-right: 0;
+    border-radius: 10px 0px 00px 10px;
+    color: white;
+    background-color:  rgba(0, 0, 0, 0.3);
+    position: absolute;
+    right: 0;
+}
+
+.NextButt p {
+    transform: rotate(270deg);
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+    margin-top: 22px ;
+    margin-bottom: 25px;
+}
+
+.PlayerScreen {
+    justify-content: center;
+    align-items: center;
+}
+
+.PlayerResultScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto;
+    margin-top: -180px;
+}
+
+.Item__Picture {
+    width: 45px;
+    height: 45px;
+}
+
+.Earnings__Item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(255, 0, 0, 0.3);
+    border: 3px solid #FF0000;
+    border-radius: 10px;
+    padding: 0px 10px;
+}
+
+.Block__Earnings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 64px;
+}
+
+.Block--Result {
+    gap: 30px;
+}
+
+.ResultScreen__Dices {
+    display: Flex;
+    gap: 30px;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid gray;
+    width: 256px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+.NextButt--Enemy {
+    position: absolute;
+    right: 0;
+    bottom: 40px;
+}
+
+.Block__Inventory--Enemy {
+    margin-right: 250px;
+}
+
+.Earnings__Item--Enemy {
+    background-color: rgba(0, 87, 255, 0.3);
+    border: 3px solid #0057FF;
+}
+
+.EnemyScreen__Rooster{
+    border: 3px solid #0057FF;
+    border-radius: 10px;
+    width: 83px;
+}
+
+.diceEqualsMessage {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 3px solid black;
+    border-radius: 10px;
+    position: fixed;
+    top: 65%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 1000;
+    font-size: 24px;
+    max-width: 80%;
+    width: 80%;
+}
+
+.Winner {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.Winner--Player {
+    border: 5px solid #FF0000;
+    color: #FF0000;
+}
+
+.Winner--Enemy{
+    border: 5px solid #0057FF;
+    color: #0057FF;
+}
+
+.Inventory__Item img {
+    width: 63px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.Menu__Button--End {
+    font-size: 32px;
+    padding: 0;
+}
+
+body {
+    user-select: none; 
+}
+@media (min-width: 650px) {
+    .PlayingStatus { 
+        left: 20%;
+    }
+ }
+
+ @media (max-height: 800px) {
+    .PlayerScreen__HenHouse {
+        width: 180px;
+    }
+
+    .PlayerScreen__Rooster {
+        width: 65px;
+    }
+
+    .Dices{
+        width: 180px;
+    }
+
+    .EnemyScreen__Rooster {
+        width: 65px;
+    }
+
+    .EnemyScreen__HenHouse {
+        width: 180px;
+    }
+
+    .DicePicture {
+        width: 45px;
+    }
+
+    .ResultScreen__Dices {
+        width: 180px;
+    }
+
+    .PlayingStatus__Name{
+        font-size: 35px;
+    }
+    
+    .PlayingStatus {
+        height: 40px;
+    }
+    
+ }
+
+@media (min-width: 1000px) {
+    .PlayerScreen, .PlayerResultScreen {
+        flex-direction: row;
+        gap: 50px;
+    }
+
+    .Rules__Image {
+        width: 100%;
+    }
+
+    .PlayingStatus { 
+        left: auto;
+        right: 55%;
+        transform: none;
+        top: 5px;
+    }
+
+    .Block {
+        left: 0;
+    }
+
+    .PlayerScreen__HenHouse, .EnemyScreen__HenHouse {
+        width: 384px;
+        border-radius: 15px;
+    }
+
+    .PlayerScreen__Rooster, .EnemyScreen__Rooster {
+        width: 124px;
+        border-radius: 15px;
+    }
+
+    .DicePicture {
+        width: 95px;
+    } 
+
+    .Dices, .ResultScreen__Dices {
+        width: 320px;
+    }
+
+    .Block__Inventory {
+        flex-direction: row;
+    }
+
+    .Inventory__Item img {
+        width: 93px;
+    }
+    .Inventory__Item p {
+        font-size: 26px;
+        padding-right: 6px;
+    }
+
+    .TradeFlex {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        place-items: center;
+    }
+
+    .Trade_Item {
+        width: 82px;
+        height: 67px;
+    }
+
+    .Item__Picture {
+        width: 65px;
+        height: 65px;
+    }
+
+    .Earnings__Item p {
+        font-size: 20px;
+    }
+
+    .NextButt {
+        padding: 20px 5px;
+    }
+
+    .NextButt p {
+        font-size: 32px;
+    }
+
+    .NextButt--Enemy {
+        bottom: 20px;
+    }
+
+    .Block__Earnings {
+        font-size: 24px;
+        flex-direction: row;
+    }
+
+    .Earnings__Item {
+        padding: 5px 20px;
+    }
+} 
