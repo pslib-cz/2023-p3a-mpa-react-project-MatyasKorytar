@@ -14,38 +14,40 @@ const PlayerResultScreen: React.FC = () => {
     const { diceEqualsMessage, playerInventory, playerDiceValues, lastEarnings, lastTrade, handleNext } = useContext(GameContext);
 
     return (
-      <div className="PlayerResultScreen">
-        <RoosterImage isOwned={playerInventory.rooster} />
-        <img className="PlayerScreen__HenHouse" src={getHenImage(playerInventory.hens)} alt={`Hen Count: ${playerInventory.hens}`} />
-        <div className="ResultScreen__Dices">
-          <Dice value={playerDiceValues[0]} />
-          <Dice value={playerDiceValues[1]} />
-        </div>
-        <div>
-            {diceEqualsMessage && !lastTrade && 
-            <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
-        </div>
-        <div className="Block Block--Result">
+      <><div className="PlayingStatus">
+        <h1 className="PlayingStatus__Name">Player</h1>
+      </div><div className="PlayerResultScreen">
+          <RoosterImage isOwned={playerInventory.rooster} />
+          <img className="PlayerScreen__HenHouse" src={getHenImage(playerInventory.hens)} alt={`Hen Count: ${playerInventory.hens}`} />
+          <div className="ResultScreen__Dices">
+            <Dice value={playerDiceValues[0]} />
+            <Dice value={playerDiceValues[1]} />
+          </div>
+          <div>
+            {diceEqualsMessage && !lastTrade &&
+              <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
+          </div>
+          <div className="Block Block--Result">
             <div className="Block__Inventory">
-                <div className="Inventory__Item">
-                    <p>{playerInventory.eggs}x</p>
-                    <img src={eggImage} alt="Eggs"/>
-                </div>
-                <div className="Inventory__Item">
-                    <p>{playerInventory.chickens}x</p>
-                    <img src={chickenImage} alt="Chickens"/>
-                </div>
-            </div>   
+              <div className="Inventory__Item">
+                <p>{playerInventory.eggs}x</p>
+                <img src={eggImage} alt="Eggs" />
+              </div>
+              <div className="Inventory__Item">
+                <p>{playerInventory.chickens}x</p>
+                <img src={chickenImage} alt="Chickens" />
+              </div>
+            </div>
 
-            {lastEarnings.length > 0 && <EarningsDisplay lastEarnings={lastEarnings}/>}
-            {lastTrade && <TradeResultDisplay/>}  
+            {lastEarnings.length > 0 && <EarningsDisplay lastEarnings={lastEarnings} />}
+            {lastTrade && <TradeResultDisplay />}
             <button className="NextButt" onClick={handleNext}>
-                    <img src={arrowImage} alt="Next Arrow"/>
-                    <p>Next</p>
-                    <img src={arrowImage} alt="Next Arrow"/>
+              <img src={arrowImage} alt="Next Arrow" />
+              <p>Next</p>
+              <img src={arrowImage} alt="Next Arrow" />
             </button>
-        </div>
-      </div>
+          </div>
+        </div></>
     );
   };
   

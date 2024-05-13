@@ -26,37 +26,39 @@ const EnemyResultScreen: React.FC = () => {
   };
 
     return (
-      <div className="PlayerResultScreen">
-      <RoosterImageEnemy isOwned={enemyInventory.rooster} />
-      <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
-      <div className="ResultScreen__Dices">
-        <EnemyDiceDisplay />
-      </div>
-      <div>
-      {diceEqualsMessage && 
-     <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
-      </div>
-      <div className="Block Block--Result Block--Enemy">
-          <div className="Block__Inventory">
-              <div className="Inventory__Item">
-                  <p>{enemyInventory.eggs}x</p>
-                  <img src={eggImage} alt="Eggs"/>
-              </div>
-              <div className="Inventory__Item">
-                  <p>{enemyInventory.chickens}x</p>
-                  <img src={chickenImage} alt="Chickens"/>
-              </div>
-           </div>
-           {!lastEnemyTrade && enemyLastEarnings && <EnemyEarningsDisplay />}
-          {lastEnemyTrade && <EnemyTradeResultDisplay />}
-        
-          <button className="NextButt" onClick={handleNext}>
-                  <img src={arrowImage} alt="Arrow"/>
-                  <p>Next</p>
-                  <img src={arrowImage} alt="Arrow"/>
-          </button>
-      </div>
-    </div>
+        <><div className="PlayingStatus">
+            <h1 className="PlayingStatus__Name">Enemy</h1>
+        </div><div className="PlayerResultScreen">
+                <RoosterImageEnemy isOwned={enemyInventory.rooster} />
+                <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
+                <div className="ResultScreen__Dices">
+                    <EnemyDiceDisplay />
+                </div>
+                <div>
+                    {diceEqualsMessage &&
+                        <div className="diceEqualsMessage">{diceEqualsMessage}</div>}
+                </div>
+                <div className="Block Block--Result Block--Enemy">
+                    <div className="Block__Inventory">
+                        <div className="Inventory__Item">
+                            <p>{enemyInventory.eggs}x</p>
+                            <img src={eggImage} alt="Eggs" />
+                        </div>
+                        <div className="Inventory__Item">
+                            <p>{enemyInventory.chickens}x</p>
+                            <img src={chickenImage} alt="Chickens" />
+                        </div>
+                    </div>
+                    {!lastEnemyTrade && enemyLastEarnings && <EnemyEarningsDisplay />}
+                    {lastEnemyTrade && <EnemyTradeResultDisplay />}
+
+                    <button className="NextButt" onClick={handleNext}>
+                        <img src={arrowImage} alt="Arrow" />
+                        <p>Next</p>
+                        <img src={arrowImage} alt="Arrow" />
+                    </button>
+                </div>
+            </div></>
     );
 };
 

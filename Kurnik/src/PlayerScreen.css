@@ -66,6 +66,24 @@ body {
     height: 45px;
 }
 
+.PlayingStatus__Name{
+    color: black;
+    margin: 0;
+    font-size: 45px;
+}
+
+.PlayingStatus {
+    position: fixed;
+    top: 40px;
+    border-radius: 20px;
+    left: 2%;
+    transform: rotate(-35deg);
+    border: 3px solid black;
+    padding: 0px 8px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
 .TradeButton {
     border: 3px solid white;
     padding: 0px 10px;
@@ -289,6 +307,50 @@ body {
 body {
     user-select: none; 
 }
+@media (min-width: 650px) {
+    .PlayingStatus { 
+        left: 20%;
+    }
+ }
+
+ @media (max-height: 800px) {
+    .PlayerScreen__HenHouse {
+        width: 180px;
+    }
+
+    .PlayerScreen__Rooster {
+        width: 65px;
+    }
+
+    .Dices{
+        width: 180px;
+    }
+
+    .EnemyScreen__Rooster {
+        width: 65px;
+    }
+
+    .EnemyScreen__HenHouse {
+        width: 180px;
+    }
+
+    .DicePicture {
+        width: 45px;
+    }
+
+    .ResultScreen__Dices {
+        width: 180px;
+    }
+
+    .PlayingStatus__Name{
+        font-size: 35px;
+    }
+    
+    .PlayingStatus {
+        height: 40px;
+    }
+    
+ }
 
 @media (min-width: 1000px) {
     .PlayerScreen, .PlayerResultScreen {
@@ -298,6 +360,13 @@ body {
 
     .Rules__Image {
         width: 100%;
+    }
+
+    .PlayingStatus { 
+        left: auto;
+        right: 55%;
+        transform: none;
+        top: 5px;
     }
 
     .Block {

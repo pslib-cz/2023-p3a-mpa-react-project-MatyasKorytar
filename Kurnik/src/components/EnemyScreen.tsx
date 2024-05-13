@@ -21,20 +21,22 @@ const EnemyScreen: React.FC = () => {
     };
   
     return (
-      <div className="PlayerScreen">
-        <RoosterImageEnemy isOwned={enemyInventory.rooster} />
-        <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
-        <EnemyInventoryDisplay />
-        <div className="ResultScreen__Dices">
-          <Dice value={1} />
-          <Dice value={1} />
-        </div>
-        <button className="NextButt NextButt--Enemy" onClick={handleEnemyTurn}>
-          <img src={arrowImage} alt="Next Arrow"/>
-          <p>Next</p>
-          <img src={arrowImage} alt="Next Arrow"/>
-        </button>
-      </div>
+      <><div className="PlayingStatus">
+        <h1 className="PlayingStatus__Name">Enemy</h1>
+      </div><div className="PlayerScreen">
+          <RoosterImageEnemy isOwned={enemyInventory.rooster} />
+          <img className="EnemyScreen__HenHouse" src={getHenImage(enemyInventory.hens)} alt={`Hen Count: ${enemyInventory.hens}`} />
+          <EnemyInventoryDisplay />
+          <div className="ResultScreen__Dices">
+            <Dice value={1} />
+            <Dice value={1} />
+          </div>
+          <button className="NextButt NextButt--Enemy" onClick={handleEnemyTurn}>
+            <img src={arrowImage} alt="Next Arrow" />
+            <p>Next</p>
+            <img src={arrowImage} alt="Next Arrow" />
+          </button>
+        </div></>
     );
 };
 
